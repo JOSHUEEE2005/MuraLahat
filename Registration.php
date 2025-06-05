@@ -12,7 +12,7 @@ if (isset($_POST['multisave'])) {
     $position = $_POST['position'];
     $profile_picture_path = handleFileUpload($_FILES["profile_picture"]);
     
-    // Check if username is already taken before proceeding
+    // Check if username is already taken before proceeding d
     $db = $con->opencon();
     $query = $db->prepare("SELECT Username FROM user_account WHERE Username = ?");
     $query->execute([$username]);

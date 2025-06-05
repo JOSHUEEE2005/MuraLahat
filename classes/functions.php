@@ -7,7 +7,7 @@ function handleFileUpload($file) {
     $check = getimagesize($file["tmp_name"]);
     if ($check === false) return false;
 
-    if ($file["size"] > 500000) return false;
+    if ($file["size"] > 900000) return false;
 
     $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
     if (!in_array($imageFileType, $allowed_types)) return false;
