@@ -1,54 +1,50 @@
 <?php
-session_start();
 
 require_once('classes/database.php');
 $con = new database();
+session_start();
 $sweetAlertConfig = "";
 
-// Fetch genres and authors for the form
-//ito yung 
-$categories = $con->viewCategory();
+if(empty($id = $_POST['id'])) {
 
-if (isset($_POST['addProducts'])) {
-    
-  $user_account_id = 1;
-  $prod_name = $_POST['productName'];
-  $prod_quantity = $_POST['productQuantity'];
-  $prod_price = $_POST['productPrice'];
-  $date_added = $_POST['productDateAdded'];
-  $price_effective_from = $_POST['priceEffectiveFrom'];
-  $price_effective_to = $_POST['priceEffectiveTo'];
-  $category_ids = isset($_POST['productCategory']) ? $_POST['productCategory'] : [];
+    header('location:update_product.php');
 
-  $result = $con->addNewProduct($user_account_id, $prod_name, $prod_quantity, $prod_price, $date_added, $price_effective_from, $price_effective_to, $category_ids);
-
-  if ($result) {
-    $sweetAlertConfig = "
-      <script>
-        Swal.fire({
-          icon: 'success',
-          title: 'Product Added',
-          text: 'The product has been added successfully!',
-          confirmButtonText: 'OK'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = 'admin_homepage.php';
-          }
-        })
-      </script>";
-  } else {
-    
-    $sweetAlertConfig = "
-      <script>
-        Swal.fire({
-          icon: 'error',
-          title: 'Something went wrong',
-          text: 'There was an error adding the product. Please try again.',
-          confirmButtonText: 'OK'
-        })
-      </script>";
-  }
+} else {
+    $id = $_POST['id'];
+    $data = $con->viewProductID($id);
 }
+
+if(isset($_POST['updateProducts'])) {
+
+   $user_account_id = 1;
+   $prod_name = $_POST['productName'];
+   $prod_quantity = $_POST['productQuantity'];
+   $prod_price = $_POST['productPrice'];
+   $date_added = $_POST['productDateAdded'];
+   $price_effective_from = $_POST['priceEffectiveFrom'];
+   $price_effective_to = $_POST['priceEffectiveTo'];
+   $category_ids = isset($_POST['productCategory']) ? $_POST['productCategory'] : [];
+
+   $result = $con->addNewProduct($user_account_id, $prod_name, $prod_quantity, $prod_price, $date_added, $price_effective_from, $price_effective_to, $category_ids);
+
+      if($result) {
+        $sweetAlertConfig = "
+            	<script>
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Author Updated',
+                  text: 'An existing author has been updated successfully!',
+                  confirmButtonText: 'OK'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    window.location.href = 'admin_homepage.php';
+                  }
+                })
+              </script>";
+      } else {
+        $_SESSION['error'] = "Sorry, there was an error signing up.";
+      }
+  }
 
 ?>
 
@@ -59,7 +55,7 @@ if (isset($_POST['addProducts'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./bootstrap-5.3.3-dist/css/bootstrap.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> <!-- Correct Bootstrap Icons CSS -->
-  <title>Add Product</title>
+  <title>Update Product Information</title>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="./package/dist/sweetalert2.css">
@@ -103,35 +99,36 @@ if (isset($_POST['addProducts'])) {
   </nav>
 <div class="container my-5 border border-2 rounded-3 shadow p-4 bg-light">
 
-  <h4 class="mt-5">Add New Product</h4>
+  <h4 class="mt-5">Update Product Information</h4>
   <form method="POST" action="" novalidate>
+     <input type="hidden" class="form-control" id="id" name="id" value="<?php echo $data['Product_ID']?>" required>
     <div class="mb-3">
       <label for="productName" class="form-label">Product Name</label>
-      <input type="text" name="productName" class="form-control" id="productName" required>
+      <input type="text" name="productName" class="form-control" id="productName" value="<?php echo $data['Product_Name']?>" required>
     </div>
  
     <div class="mb-3">
       <label for="productPrice" class="form-label">Product Price</label>
-      <input type="number" name="productPrice" class="form-control" id="productPrice" required>
+      <input type="number" name="productPrice" class="form-control" id="" value="<?php echo $data['Price']?>" required>
     </div>
 
     <div class="mb-3">
       <label for="priceEffectiveFrom">Price Effective From</label>
-        <input type="date" class="form-control" name="priceEffectiveFrom" id="priceEffectiveFrom" required>
+        <input type="date" class="form-control" name="priceEffectiveFrom" id="priceEffectiveFrom" value="<?php echo $data['Effective_From']?>" required>
         <div class="valid-feedback">Great!</div>
         <div class="invalid-feedback">Please enter a valid date.</div>
     </div>
 
     <div class="mb-3">
       <label for="priceEffectiveTo">Price Effective To</label>
-        <input type="date" class="form-control" name="priceEffectiveTo" id="priceEffectiveTo" required>
+        <input type="date" class="form-control" name="priceEffectiveTo" id="priceEffectiveTo" value="<?php echo $data['Effective_To']?>" required>
         <div class="valid-feedback">Great!</div>
         <div class="invalid-feedback">Please enter a valid date.</div>
     </div>
 
     <div class="mb-3">
       <label for="productCategory" class="form-label">Product Category</label>
-      <select class="form-select" id="productCategory" name="productCategory[]" multiple required>
+      <select class="form-select" id="productCategory" name="productCategory[]"  value="<?php echo $data['Category_Name']?>" multiple required>
         <?php foreach($categories as $category): ?>
         <option value="<?php echo $category['Category_ID']; ?>"> <?php echo htmlspecialchars($category['Category_Name']); ?></option>
         <?php endforeach; ?>
@@ -143,12 +140,12 @@ if (isset($_POST['addProducts'])) {
 
     <div class="mb-3">
       <label for="productQuantity" class="form-label">Quantity Available</label>
-      <input type="number" name="productQuantity" class="form-control" id="productQuantity" required>
+      <input type="number" name="productQuantity" class="form-control" id="productQuantity" value="<?php echo $data['Product_Stock']?>" required>
     </div>
 
     <div class="mb-3">
       <label for="productDateAdded">Date Added</label>
-      <input type="datetime-local" class="form-control" name="productDateAdded" id="productDateAdded" required>
+      <input type="datetime-local" class="form-control" name="productDateAdded" id="productDateAdded" value="<?php echo $data['Created_At']?>" required>
       <div class="valid-feedback">Great!</div>
       <div class="invalid-feedback">Please enter a valid date.</div>
     </div>
@@ -166,28 +163,7 @@ if (isset($_POST['addProducts'])) {
     <script src="./package/dist/sweetalert2.js"></script>
     <?php echo $sweetAlertConfig; ?>
 
-<script>
-  // Set default value to today's date
-  document.getElementById("priceEffectiveFrom").value = new Date().toISOString().split("T")[0];
-</script>
 
-<script>
-  // Get current date and time
-  const now = new Date();
-  
-  // Format date and time as YYYY-MM-DDTHH:MM for datetime-local
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  
-  // Combine date and time for datetime-local
-  const dateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
-  
-  // Set the input field value
-  document.getElementById("productDateAdded").value = dateTime;
-</script>
 
 </body>
 </html>

@@ -20,7 +20,7 @@ if (isset($_POST['login'])) {
                 text: 'Welcome!',
                 confirmButtonText: 'Continue'
             }).then(() => {
-                window.location.href = 'homepage.php';
+                window.location.href = 'admin_homepage.php';
             });
         </script>";
     } else {
