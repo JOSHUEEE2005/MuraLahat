@@ -79,7 +79,7 @@ if (isset($_POST['login'])) {
             </div>
             <button type="submit" name="login" class="btn btn-primary w-100 py-2">Login</button>
             <div class="text-center mt-4">
-                <a href="Registration.php" class="text-decoration-none">Don't have an account? Register here</a>
+                <a href="register.php" class="text-decoration-none">Don't have an account? Register here</a>
             </div>
         </form>
     </div>

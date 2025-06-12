@@ -169,6 +169,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <li class="nav-item">
                         <a class="nav-link" href="manage_members.php">Manage Members</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add_category.php">Add Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add_discount.php">Add Discount</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle"></i> Profile

@@ -20,3 +20,4 @@ Received: customerId=1, cashPaid=4000Received: customerId=1, cashPaid=5000Receiv
 [11-Jun-2025 17:06:28 Europe/Berlin] Delete Product Error: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`help_muralahat`.`cart`, CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`Product_ID`) REFERENCES `product` (`Product_ID`)) in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 111
 [11-Jun-2025 17:41:45 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 82
 [11-Jun-2025 17:41:55 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 82
+[12-Jun-2025 14:46:03 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 4

@@ -351,5 +351,39 @@ class database {
             return false;
         }
     }
+
+    function addCategory($categName) {
+                $con = $this->opencon();
+                try {
+                $con->beginTransaction();
+
+                // Insert into Users table
+                $stmt = $con->prepare("INSERT INTO Category (Category_Name) VALUES (?)");
+                $stmt->execute([$categName]);
+
+                //Get the newly inserted user_id
+                $Category_ID = $con->lastInsertId();
+
+                $con->commit();
+                return $Category_ID; //return user_id for further use (like inserting address)
+            } catch(PDOException $e) {
+                $con->rollBack();
+                return false;
+            }
+
+        }
+
+        // function viewCategory() {
+        //     $con = $this->opencon();
+        //         return $con->query("SELECT * FROM Category")
+        //         ->fetchAll();
+        // }
+
+        // function viewCategoryID($id) {
+        //     $con = $this->opencon();
+        //         $stmt = $con->prepare("SELECT * FROM Category WHERE Category_ID = ?");
+        //         $stmt->execute([$id]);
+        //         return $stmt->fetch(PDO::FETCH_ASSOC);
+        // }
 }
 ?>
