@@ -102,10 +102,11 @@ if (isset($_POST['multisave'])) {
                 <label for="position" class="form-label">Position:</label>
                 <select class="form-select" name="position" id="position" required>
                     <option selected disabled value="">Select Position</option>
-                    <option>Manager</option>
-                    <option>Cashier</option>
-                    <option>Staff</option>
-                    <option>Sales Lady</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Cashier">Cashier</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Sales Lady">Sales Lady</option>
                 </select>
                 <div class="valid-feedback">Looks good!</div>
                 <div class="invalid-feedback">Please select a position.</div>
@@ -186,7 +187,6 @@ if (isset($_POST['multisave'])) {
         function updateSubmitButton() {
             const allValid = Array.from(inputs).every(input => input.checkValidity());
             submitButton.disabled = !allValid || !isUsernameValid;
-            // Debug: Log validation state
             console.log({
                 allValid,
                 isUsernameValid,
@@ -235,7 +235,6 @@ if (isset($_POST['multisave'])) {
             }
         });
 
-        // Initial submit button state
         updateSubmitButton();
     });
     </script>

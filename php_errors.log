@@ -1,0 +1,22 @@
+[06-Jun-2025 08:41:02 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: There is no active transaction in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\process_transaction.php:85
+Stack trace:
+#0 C:\xampp\htdocs\MuraKasiLahat\MuraLahat\process_transaction.php(85): PDO->rollBack()
+#1 {main}
+  thrown in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\process_transaction.php on line 85
+[06-Jun-2025 11:40:08 Europe/Berlin] Transaction Error: Invalid JSON input: Syntax error in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\functions.php on line 47
+[06-Jun-2025 13:53:08 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 5
+[06-Jun-2025 16:53:41 Europe/Berlin] Delete Product Success: Product ID 6 deleted
+[06-Jun-2025 17:21:00 Europe/Berlin] Delete Product Success: Product ID 1 deleted
+[06-Jun-2025 17:21:03 Europe/Berlin] Delete Product Success: Product ID 2 deleted
+[06-Jun-2025 17:21:16 Europe/Berlin] Delete Product Success: Product ID 3 deleted
+[06-Jun-2025 17:21:25 Europe/Berlin] Delete Product Success: Product ID 4 deleted
+[06-Jun-2025 17:45:16 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 4
+[06-Jun-2025 17:46:25 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 5
+[11-Jun-2025 14:03:41 Europe/Berlin] Delete Product Success: Product ID 1 deleted
+[11-Jun-2025 14:03:45 Europe/Berlin] Delete Product Success: Product ID 3 deleted
+[11-Jun-2025 14:03:48 Europe/Berlin] Delete Product Success: Product ID 4 deleted
+Received: customerId=1, cashPaid=4000Received: customerId=1, cashPaid=5000Received: customerId=1, cashPaid=5000Received: customerId=1, cashPaid=12345Received: customerId=1, cashPaid=2000[11-Jun-2025 17:04:42 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 82
+[11-Jun-2025 17:06:04 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 82
+[11-Jun-2025 17:06:28 Europe/Berlin] Delete Product Error: SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`help_muralahat`.`cart`, CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`Product_ID`) REFERENCES `product` (`Product_ID`)) in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 111
+[11-Jun-2025 17:41:45 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 82
+[11-Jun-2025 17:41:55 Europe/Berlin] PHP Warning:  foreach() argument must be of type array|object, string given in C:\xampp\htdocs\MuraKasiLahat\MuraLahat\classes\database.php on line 82
