@@ -20,13 +20,16 @@ try {
     $firstName = $input['firstName'] ?? null;
     $lastName = $input['lastName'] ?? null;
     $phoneNumber = $input['phoneNumber'] ?? null;
+    $street = $input['street'] ?? null;
+    $barangay = $input['barangay'] ?? null;
+    $city = $input['street'] ?? null;
 
-    if (!$firstName || !$lastName || !$phoneNumber) {
+    if (!$firstName || !$lastName || !$phoneNumber || !$street || !$barangay || !$city) {
         throw new Exception('Missing required fields');
     }
 
     $con = new database();
-    $result = $con->addCustomerMembership($firstName, $lastName, $phoneNumber);
+    $result = $con->addCustomerMembership($firstName, $lastName, $phoneNumber, $street, $barangay, $city);
 
     echo json_encode($result);
 

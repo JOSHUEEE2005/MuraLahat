@@ -595,8 +595,17 @@ try {
                     <input type="text" id="firstName" class="swal2-input" required>
                     <label for="lastName" class="form-label">Last Name</label>
                     <input type="text" id="lastName" class="swal2-input" required>
-                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                    <label for="phoneNumber" class="form-label">Phone No.</label>
                     <input type="text" id="phoneNumber" class="swal2-input" required>
+                    
+                    <div class="card-header bg-info text-white m-3">Address Information</div>
+                    
+                    <label for="street" class="form-label">Street</label>
+                    <input type="text" id="street" class="swal2-input" required>
+                    <label for="barangay" class="form-label">Barangay</label>
+                    <input type="text" id="barangay" class="swal2-input" required>
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" id="city" class="swal2-input" required>
                 `,
                 showCancelButton: true,
                 confirmButtonText: 'Save Membership',
@@ -609,7 +618,10 @@ try {
                     const firstName = document.getElementById('firstName').value.trim();
                     const lastName = document.getElementById('lastName').value.trim();
                     const phoneNumber = document.getElementById('phoneNumber').value.trim();
-                    if (!firstName || !lastName || !phoneNumber) {
+                    const street = document.getElementById('street').value.trim();
+                    const barangay = document.getElementById('barangay').value.trim();
+                    const city = document.getElementById('city').value.trim();
+                    if (!firstName || !lastName || !phoneNumber || !street || !barangay || !city) {
                         Swal.showValidationMessage('Please fill in all fields');
                         return false;
                     }
@@ -617,15 +629,15 @@ try {
                         Swal.showValidationMessage('Please enter a valid phone number (at least 10 digits)');
                         return false;
                     }
-                    return { firstName, lastName, phoneNumber };
+                    return { firstName, lastName, phoneNumber, street, barangay, city };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const { firstName, lastName, phoneNumber } = result.value;
+                    const { firstName, lastName, phoneNumber, street, barangay, city } = result.value;
                     fetch('process_membership.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ firstName, lastName, phoneNumber })
+                        body: JSON.stringify({ firstName, lastName, phoneNumber, street, barangay, city })
                     })
                     .then(response => response.json())
                     .then(data => {

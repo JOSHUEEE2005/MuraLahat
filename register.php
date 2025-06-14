@@ -102,11 +102,12 @@ if (isset($_POST['multisave'])) {
                 <label for="position" class="form-label">Position:</label>
                 <select class="form-select" name="position" id="position" required>
                     <option selected disabled value="">Select Position</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Manager">Manager</option>
-                    <option value="Cashier">Cashier</option>
-                    <option value="Staff">Staff</option>
-                    <option value="Sales Lady">Sales Lady</option>
+                    <?php
+                    $positions = $con->viewPositions();
+                    foreach ($positions as $position) {
+                        echo "<option value='{$position['Position_Details_ID']}'>{$position['Position']}</option>";
+                    }
+                    ?>
                 </select>
                 <div class="valid-feedback">Looks good!</div>
                 <div class="invalid-feedback">Please select a position.</div>
@@ -163,7 +164,8 @@ if (isset($_POST['multisave'])) {
                 const passwordInput = form.querySelector("input[name='password']");
                 isValid = input.value === passwordInput.value && input.value !== '';
             } else if (input.name === 'position') {
-                isValid = input.value !== '';
+                //isValid = input.value !== '';
+                isValid = input.value !== '' && input.value !== null;
             } else if (input.type === 'file') {
                 isValid = input.files.length > 0;
             } else {

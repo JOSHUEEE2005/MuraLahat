@@ -2,7 +2,7 @@
 session_start();
 require_once('classes/database.php');
 $con = new database();
-
+ 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $prod_name = $_POST['prod_name'] ?? '';
     $prod_quantity = $_POST['prod_quantity'] ?? 0;
@@ -12,23 +12,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $category_ids = $_POST['category_ids'] ?? [];
     $date_added = date('Y-m-d H:i:s');
     $user_account_id = $_SESSION['user_account_id'] ?? 1; // Default to 1 for testing
-
+ 
     // Server-side validation for dates
     if (strtotime($price_effective_from) > time()) {
         echo "<script>
-            alert('Effective From date cannot be in the future. Please select today\\'s date or earlier.');
-            window.location.href='add_product.php';
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Date',
+                text: 'Effective From date cannot be in the future. Please select today\\'s date or earlier.',
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-primary' },
+                buttonsStyling: false
+            }).then(() => {
+                window.location.href='add_product.php';
+            });
         </script>";
         exit;
     }
     if ($price_effective_to && strtotime($price_effective_to) < time()) {
         echo "<script>
-            alert('Effective To date cannot be in the past. Please select a future date or leave it blank.');
-            window.location.href='add_product.php';
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Date',
+                text: 'Effective To date cannot be in the past. Please select a future date or leave it blank.',
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-primary' },
+                buttonsStyling: false
+            }).then(() => {
+                window.location.href='add_product.php';
+            });
         </script>";
         exit;
     }
-
+ 
     $image_path = null;
     if (!empty($_FILES['prod_image']['name'])) {
         $target_dir = 'images/';
@@ -42,35 +58,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $target_file = $target_dir . $image_name;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
         $allowed_types = ['jpg', 'jpeg', 'png'];
-
+ 
         // Validate image
         if (!in_array($imageFileType, $allowed_types)) {
             echo "<script>
-                alert('Only JPG, JPEG, and PNG files are allowed.');
-                window.location.href='add_product.php';
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid File Type',
+                    text: 'Only JPG, JPEG, and PNG files are allowed.',
+                    confirmButtonText: 'OK',
+                    customClass: { confirmButton: 'btn btn-primary' },
+                    buttonsStyling: false
+                }).then(() => {
+                    window.location.href='add_product.php';
+                });
             </script>";
-            exit;
-        }
-        if ($_FILES['prod_image']['size'] > 2 * 1024 * 1024) {
-            echo "<script>
-                alert('File size must be less than 2MB.');
-                window.location.href='add_product.php';
-            </script>";
-            exit;
-        }
-
-        // Move uploaded file
-        if (move_uploaded_file($_FILES['prod_image']['tmp_name'], $target_file)) {
-            $image_path = $target_file;
-        } else {
-            echo "<script>
-                alert('Failed to upload image. Please check directory permissions.');
-                window.location.href='add_product.php';
-            </script>";
-            exit;
-        }
+        exit;
     }
-
+    if ($_FILES['prod_image']['size'] > 2 * 1024 * 1024) {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'File Too Large',
+                text: 'File size must be less than 2MB.',
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-primary' },
+                buttonsStyling: false
+            }).then(() => {
+                window.location.href='add_product.php';
+            });
+        </script>";
+        exit;
+    }
+ 
+    // Move uploaded file
+    if (move_uploaded_file($_FILES['prod_image']['tmp_name'], $target_file)) {
+        $image_path = $target_file;
+    } else {
+        echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Upload Failed',
+                text: 'Failed to upload image. Please check directory permissions.',
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-primary' },
+                buttonsStyling: false
+            }).then(() => {
+                window.location.href='add_product.php';
+            });
+        </script>";
+        exit;
+    }
+}
+ 
     // Add product to database
     $product_id = $con->addNewProduct(
         $user_account_id,
@@ -83,21 +123,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $category_ids,
         $image_path
     );
-
+ 
     if ($product_id) {
         echo "<script>
-            alert('Product added successfully!');
-            window.location.href='view_products.php';
+            function showSuccessAlert() {
+                if (typeof Swal === 'undefined') {
+                    setTimeout(showSuccessAlert, 100);
+                    return;
+                }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Product added successfully!',
+                    confirmButtonText: 'OK',
+                    customClass: { confirmButton: 'btn btn-primary' },
+                    buttonsStyling: false
+                }).then(() => {
+                    window.location.href='view_products.php';
+                });
+            }
+            showSuccessAlert();
         </script>";
     } else {
         echo "<script>
-            alert('Failed to add product. Please try again.');
-            window.location.href='add_product.php';
+            function showErrorAlert() {
+                if (typeof Swal === 'undefined') {
+                    setTimeout(showErrorAlert, 100);
+                    return;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to add product. Please try again.',
+                    confirmButtonText: 'OK',
+                    customClass: { confirmButton: 'btn btn-primary' },
+                    buttonsStyling: false
+                }).then(() => {
+                    window.location.href='add_product.php';
+                });
+            }
+            showErrorAlert();
         </script>";
     }
 }
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -190,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </nav>
-
+ 
     <!-- Add Product Form -->
     <div class="container">
         <h2 class="section-title text-center">Add New Product</h2>
@@ -235,12 +306,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </form>
     </div>
-
+ 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <!-- Custom JavaScript -->
     <script>
         // Client-side validation for Effective From date
@@ -265,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 });
             }
         });
-
+ 
         // Client-side validation for Effective To date
         document.getElementById('price_effective_to').addEventListener('change', function() {
             if (this.value) {
@@ -285,15 +354,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
         });
-
+ 
         function updatePersonalInfo() {
-            Swal.fire('Info', 'Update personal info functionality not implemented yet.', 'info');
+            Swal.fire({
+                icon: 'info',
+                title: 'Info',
+                text: 'Update personal info functionality not implemented yet.',
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-primary' },
+                buttonsStyling: false
+            });
         }
-
+ 
         function updatePassword() {
-            Swal.fire('Info', 'Update password functionality not implemented yet.', 'info');
+            Swal.fire({
+                icon: 'info',
+                title: 'Info',
+                text: 'Update password functionality not implemented yet.',
+                confirmButtonText: 'OK',
+                customClass: { confirmButton: 'btn btn-primary' },
+                buttonsStyling: false
+            });
         }
-
+ 
         function logout() {
             Swal.fire({
                 icon: 'success',
@@ -309,3 +392,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 </body>
 </html>
+ 

@@ -11,16 +11,37 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['position'])) {
 // Fetch all users with their positions
 $users = $con->getAllUsersWithPositions();
 
-// Define valid positions for dropdown
-$valid_positions = ['Admin', 'Cashier', 'Staff', 'Sales Lady', 'Manager'];
+// Fetch positions from the database
+$positions = $con->viewPositions();
 
 $sweetAlertConfig = "";
 if (isset($_POST['update_position'])) {
     $user_id = filter_input(INPUT_POST, 'user_id', FILTER_VALIDATE_INT);
     $new_position = filter_input(INPUT_POST, 'position', FILTER_SANITIZE_STRING);
 
-    if ($user_id && $new_position && in_array($new_position, $valid_positions)) {
+    // Debug: Inspect submitted data and positions
+    error_log("Update Position: user_id=$user_id, new_position=$new_position, POST=" . print_r($_POST, true));
+    error_log("Positions: " . print_r($positions, true));
+
+    // Validate the position name against the database
+    $valid_position_names = array_column($positions, 'Position');
+    error_log("Valid Position Names: " . print_r($valid_position_names, true));
+
+    if ($user_id === false || $user_id <= 0) {
+        $error_message = "Invalid user ID: $user_id";
+    } elseif (empty($new_position)) {
+        $error_message = "No position selected";
+    } elseif (empty($valid_position_names)) {
+        $error_message = "No valid positions available in the database";
+    } elseif (!in_array($new_position, $valid_position_names)) {
+        $error_message = "Selected position ($new_position) is not valid. Valid positions: " . implode(', ', $valid_position_names);
+    } else {
+        $error_message = null;
+    }
+
+    if ($error_message === null) {
         $result = $con->updateUserPosition($user_id, $new_position);
+        error_log("Update Result: " . print_r($result, true));
         if ($result['success']) {
             $sweetAlertConfig = "
             <script>
@@ -41,7 +62,7 @@ if (isset($_POST['update_position'])) {
             Swal.fire({
                 icon: 'error',
                 title: 'Update Failed',
-                text: '" . addslashes($result['error']) . "',
+                text: '" . addslashes($result['error'] ?? 'Unknown database error') . "',
                 confirmButtonText: 'OK',
                 customClass: { confirmButton: 'btn btn-primary' },
                 buttonsStyling: false
@@ -54,7 +75,7 @@ if (isset($_POST['update_position'])) {
         Swal.fire({
             icon: 'error',
             title: 'Invalid Input',
-            text: 'Please select a valid user and position.',
+            text: '" . addslashes($error_message) . "',
             confirmButtonText: 'OK',
             customClass: { confirmButton: 'btn btn-primary' },
             buttonsStyling: false
@@ -150,12 +171,13 @@ if (isset($_GET['delete_user'])) {
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Mura Lahat</a>
             <div class="navbar-nav">
+                <a class="nav-link" href="add_position.php">Add Position</a>
                 <a class="nav-link" href="<?php echo $_SESSION['position'] === 'Admin' ? 'admin_dashboard.php' : 'view_products.php'; ?>">Back to Dashboard</a>
             </div>
         </div>
     </nav>
 
-    <div class="container custom-container">
+    <div class="container custom-container mt-5">
         <h3 class="text-center mb-4">Manage Users</h3>
         <table class="table table-striped table-hover">
             <thead>
@@ -166,27 +188,43 @@ if (isset($_GET['delete_user'])) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($users as $user): ?>
+                <?php if (empty($users)): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($user['Username']); ?></td>
-                        <td>
-                            <form method="post" action="" class="d-inline">
-                                <input type="hidden" name="user_id" value="<?php echo $user['User_Account_ID']; ?>">
-                                <select name="position" class="form-select form-select-sm d-inline w-auto">
-                                    <?php foreach ($valid_positions as $position): ?>
-                                        <option value="<?php echo htmlspecialchars($position); ?>" <?php echo $user['POSITION'] === $position ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($position); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                                <button type="submit" name="update_position" class="btn btn-primary btn-sm">Update</button>
-                            </form>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm delete-btn" data-user-id="<?php echo $user['User_Account_ID']; ?>">Delete</button>
-                        </td>
+                        <td colspan="3" class="text-center">No active users found.</td>
                     </tr>
-                <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($users as $user): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($user['Username']); ?></td>
+                            <td>
+                                <form method="post" action="manage_users.php" class="d-inline">
+                                    <input type="hidden" name="user_id" value="<?php echo $user['User_Account_ID']; ?>">
+                                    <select name="position" class="form-select form-select-sm d-inline w-auto" required>
+                                            <?php if (empty($positions)): ?>
+                                                <option value="" disabled selected>No positions available</option>
+                                            <?php else: ?>
+                                                <?php foreach ($positions as $position): ?>
+                                                    <option value="<?php echo htmlspecialchars($position['Position']); ?>" 
+                                                            <?php echo ($user['Position'] ?? '') === $position['Position'] ? 'selected' : ''; ?>>
+                                                        <?php echo htmlspecialchars($position['Position']); ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </select>
+                                    <button type="submit" name="update_position" class="btn btn-primary btn-sm">Update</button>
+                                </form>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm delete-btn" 
+                                        data-user-id="<?php echo $user['User_Account_ID']; ?>" 
+                                        <?php echo $user['User_Account_ID'] == $_SESSION['user_id'] ? 'disabled' : ''; ?>
+                                        aria-label="Delete user <?php echo htmlspecialchars($user['Username']); ?>">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>
