@@ -178,24 +178,26 @@ class database {
         $con = $this->opencon();
         try {
             $con->beginTransaction();
+
+            // Check if phone number already exists
             $stmt = $con->prepare("SELECT Customer_ID FROM customer WHERE Customer_Phone = ?");
             $stmt->execute([$phoneNumber]);
             if ($stmt->fetch()) {
                 $con->rollBack();
                 return ['success' => false, 'error' => 'Phone number already registered'];
             }
-            $stmt = $con->prepare("INSERT INTO customer (Customer_FirstName, Customer_LastName, Customer_Phone, Membership_Status) VALUES (?, ?, ?, 1)");
-            $stmt->execute([$firstName, $lastName, $phoneNumber]);
-            $customerId = $con->lastInsertId();
-            $con->commit();
 
-            $stmt = $con->prepare("INSERT INTO customer_address (CA_ID, CA_Street, CA_Barangay, CA_City) VALUES (?, ?, ?, ?)");
+            // Insert customer address first
+            $stmt = $con->prepare("INSERT INTO customer_address (CA_Street, CA_Barangay, CA_City) VALUES (?, ?, ?)");
             $stmt->execute([$street, $barangay, $city]);
+            $caId = $con->lastInsertId();
+
+            // Insert customer with the CA_ID
+            $stmt = $con->prepare("INSERT INTO customer (CA_ID, Customer_FirstName, Customer_LastName, Customer_Phone, Membership_Status) VALUES (?, ?, ?, ?, 1)");
+            $stmt->execute([$caId, $firstName, $lastName, $phoneNumber]);
             $customerId = $con->lastInsertId();
+
             $con->commit();
-
-
-
             return ['success' => true, 'customerId' => $customerId];
         } catch (PDOException $e) {
             $con->rollBack();
@@ -203,14 +205,6 @@ class database {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
-
-    // function getMembers() {
-    //     $con = $this->opencon();
-    //     $query = "SELECT Customer_ID, Customer_FirstName, Customer_LastName, Customer_Phone
-    //               FROM customer
-    //               WHERE Membership_Status = 1";
-    //     return $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
-    // }
 
     function getMembers() {
         $con = $this->opencon();
@@ -224,8 +218,7 @@ class database {
                 ca.CA_Barangay,
                 ca.CA_City
             FROM customer c
-            LEFT JOIN customer_address_link cal ON c.Customer_ID = cal.Customer_ID
-            LEFT JOIN customer_address ca ON cal.CA_ID = ca.CA_ID
+            LEFT JOIN customer_address ca ON c.CA_ID = ca.CA_ID
             WHERE c.Membership_Status = 1";
 
         return $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
@@ -259,6 +252,84 @@ class database {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
+    // function addCustomerMembership($firstName, $lastName, $phoneNumber, $street, $barangay, $city) {
+    //     $con = $this->opencon();
+    //     try {
+    //         $con->beginTransaction();
+    //         $stmt = $con->prepare("SELECT Customer_ID FROM customer WHERE Customer_Phone = ?");
+    //         $stmt->execute([$phoneNumber]);
+    //         if ($stmt->fetch()) {
+    //             $con->rollBack();
+    //             return ['success' => false, 'error' => 'Phone number already registered'];
+    //         }
+    //         $stmt = $con->prepare("INSERT INTO customer (Customer_FirstName, Customer_LastName, Customer_Phone, Membership_Status) VALUES (?, ?, ?, 1)");
+    //         $stmt->execute([$firstName, $lastName, $phoneNumber]);
+    //         $customerId = $con->lastInsertId();
+    //         $con->commit();
+
+    //         $stmt = $con->prepare("INSERT INTO customer_address (CA_ID, CA_Street, CA_Barangay, CA_City) VALUES (?, ?, ?, ?)");
+    //         $stmt->execute([$street, $barangay, $city]);
+    //         $customerId = $con->lastInsertId();
+    //         $con->commit();
+
+
+
+    //         return ['success' => true, 'customerId' => $customerId];
+    //     } catch (PDOException $e) {
+    //         $con->rollBack();
+    //         error_log('Add Membership Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+    //         return ['success' => false, 'error' => $e->getMessage()];
+    //     }
+    // }
+
+    // function getMembers() {
+    //     $con = $this->opencon();
+    //     $query = "
+    //         SELECT 
+    //             c.Customer_ID, 
+    //             c.Customer_FirstName, 
+    //             c.Customer_LastName, 
+    //             c.Customer_Phone,
+    //             ca.CA_Street,
+    //             ca.CA_Barangay,
+    //             ca.CA_City
+    //         FROM customer c
+    //         LEFT JOIN customer_address_link cal ON c.Customer_ID = cal.Customer_ID
+    //         LEFT JOIN customer_address ca ON cal.CA_ID = ca.CA_ID
+    //         WHERE c.Membership_Status = 1";
+
+    //     return $con->query($query)->fetchAll(PDO::FETCH_ASSOC);
+    // }
+
+    // function deleteMember($customerId) {
+    //     $con = $this->opencon();
+    //     try {
+    //         $con->beginTransaction();
+    //         $stmt = $con->prepare("SELECT Customer_ID FROM customer WHERE Customer_ID = ?");
+    //         $stmt->execute([$customerId]);
+    //         if (!$stmt->fetch()) {
+    //             $con->rollBack();
+    //             error_log("Delete Member Error: Customer ID $customerId not found");
+    //             return ['success' => false, 'error' => 'Customer not found'];
+    //         }
+    //         $stmt = $con->prepare("UPDATE customer SET Membership_Status = 0 WHERE Customer_ID = ?");
+    //         $stmt->execute([$customerId]);
+    //         $rowCount = $stmt->rowCount();
+    //         if ($rowCount === 0) {
+    //             $con->rollBack();
+    //             error_log("Delete Member Error: No rows updated for Customer ID $customerId");
+    //             return ['success' => false, 'error' => 'No rows updated'];
+    //         }
+    //         $con->commit();
+    //         error_log("Delete Member Success: Membership_Status set to 0 for Customer ID $customerId");
+    //         return ['success' => true];
+    //     } catch (PDOException $e) {
+    //         $con->rollBack();
+    //         error_log('Delete Member Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+    //         return ['success' => false, 'error' => $e->getMessage()];
+    //     }
+    // }
 
     // function getAllUsersWithPositions() {
     //     $con = $this->opencon();

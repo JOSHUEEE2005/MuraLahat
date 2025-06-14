@@ -113,7 +113,7 @@ $members = $con->getMembers();
                                 <td><?php echo htmlspecialchars($member['Customer_FirstName']); ?></td>
                                 <td><?php echo htmlspecialchars($member['Customer_LastName']); ?></td>
                                 <td><?php echo htmlspecialchars($member['Customer_Phone']); ?></td>
-                                <td><?php echo htmlspecialchars($member['CA_Street'], $member['CA_Barangay'], $member['CA_City']); ?></td>
+                                <td><?php echo htmlspecialchars($member['CA_Street'] . ', ' . $member['CA_Barangay'] . ', ' . $member['CA_City']); ?></td>
                                 <td>
                                     <button class="btn btn-delete" onclick="deleteMember(<?php echo $member['Customer_ID']; ?>)">
                                         <i class="bi bi-trash me-2"></i>Remove

@@ -22,7 +22,7 @@ try {
     $phoneNumber = $input['phoneNumber'] ?? null;
     $street = $input['street'] ?? null;
     $barangay = $input['barangay'] ?? null;
-    $city = $input['street'] ?? null;
+    $city = $input['city'] ?? null;
 
     if (!$firstName || !$lastName || !$phoneNumber || !$street || !$barangay || !$city) {
         throw new Exception('Missing required fields');

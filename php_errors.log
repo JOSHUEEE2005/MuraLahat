@@ -31,3 +31,6 @@ Received: customerId=1, cashPaid=4000Received: customerId=1, cashPaid=5000Receiv
 [14-Jun-2025 12:08:50 Europe/Berlin] PHP Warning:  Undefined variable $city in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 207
 [14-Jun-2025 12:08:50 Europe/Berlin] Membership Error: There is no active transaction in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 215
 [14-Jun-2025 12:11:23 Europe/Berlin] Membership Error: There is no active transaction in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 215
+[14-Jun-2025 12:42:35 Europe/Berlin] Add Membership Error: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`testml2`.`customer`, CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`CA_ID`) REFERENCES `customer_address` (`CA_ID`) ON UPDATE CASCADE) in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 188
+[14-Jun-2025 12:46:10 Europe/Berlin] Add Membership Error: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`testml2`.`customer`, CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`CA_ID`) REFERENCES `customer_address` (`CA_ID`) ON UPDATE CASCADE) in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 188
+[14-Jun-2025 13:21:41 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 3
