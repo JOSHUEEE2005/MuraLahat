@@ -10,6 +10,7 @@ if (isset($_POST['multisave'])) {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $position = $_POST['position'];
+    $hourly_rate = filter_input(INPUT_POST, 'hourly_rate', FILTER_VALIDATE_FLOAT);
     $profile_picture_path = handleFileUpload($_FILES["profile_picture"]);
     
     // Check if username is already taken before proceeding
@@ -22,8 +23,10 @@ if (isset($_POST['multisave'])) {
         $_SESSION['error'] = "Username is already taken. Please choose a different username.";
     } elseif ($profile_picture_path === false) {
         $_SESSION['error'] = "Sorry, there was an error uploading your file or the file is invalid.";
+    } elseif ($hourly_rate === false || $hourly_rate < 0) {
+        $_SESSION['error'] = "Please enter a valid rate (must be a non-negative number).";
     } else {
-        $userID = $con->signupUser($username, $password, $position, $profile_picture_path);
+        $userID = $con->signupUser($username, $password, $position, $hourly_rate, $profile_picture_path);
         
         if ($userID) {
             $sweetAlertConfig = "
@@ -113,6 +116,12 @@ if (isset($_POST['multisave'])) {
                 <div class="invalid-feedback">Please select a position.</div>
             </div>
             <div class="mb-3">
+                <label for="hourly_rate" class="form-label">Rate (₱ per 5 seconds):</label>
+                <input type="number" class="form-control" name="hourly_rate" id="hourly_rate" placeholder="Enter rate (e.g., 1000)" step="0.01" min="0" required>
+                <div class="valid-feedback">Looks good!</div>
+                <div class="invalid-feedback">Please enter a valid non-negative rate.</div>
+            </div>
+            <div class="mb-3">
                 <label for="profile_picture" class="form-label">Profile Picture:</label>
                 <input type="file" class="form-control" name="profile_picture" id="profile_picture" accept="image/*" required>
                 <div class="valid-feedback">Looks good!</div>
@@ -164,8 +173,10 @@ if (isset($_POST['multisave'])) {
                 const passwordInput = form.querySelector("input[name='password']");
                 isValid = input.value === passwordInput.value && input.value !== '';
             } else if (input.name === 'position') {
-                //isValid = input.value !== '';
                 isValid = input.value !== '' && input.value !== null;
+            } else if (input.name === 'hourly_rate') {
+                const rate = parseFloat(input.value);
+                isValid = !isNaN(rate) && rate >= 0;
             } else if (input.type === 'file') {
                 isValid = input.files.length > 0;
             } else {

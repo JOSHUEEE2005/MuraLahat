@@ -179,6 +179,101 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <style>
+ /* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 1000;
+    transition: all 0.3s;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+}
+
+.sidebar-header {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,0.8);
+    padding: 12px 20px;
+    margin: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background-color: rgba(0,123,255,0.2);
+    border-left: 3px solid #0d6efd;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: all 0.3s;
+    min-width: calc(100vw - 250px); /* Ensure content doesn't collapse */
+    box-sizing: border-box;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        overflow: hidden;
+    }
+
+    .sidebar .nav-link span,
+    .sidebar-header h3,
+    .sidebar .dropdown-toggle span {
+        display: none;
+    }
+
+    .sidebar .nav-link {
+        text-align: center;
+        padding: 12px 5px;
+    }
+
+    .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.2rem;
+    }
+
+    .main-content {
+        margin-left: 70px;
+        min-width: calc(100vw - 70px); /* Adjust for smaller sidebar */
+    }
+}
+
+/* Handle high zoom levels */
+@media (max-width: 576px) or (max-device-width: 576px) {
+    .sidebar {
+        width: 60px; /* Slightly smaller for very small screens or high zoom */
+    }
+
+    .main-content {
+        margin-left: 60px;
+        min-width: calc(100vw - 60px);
+    }
+}
+</style>
+    
+    <style>
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -222,94 +317,99 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Mura Lahat Store</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="add_product.php">Add Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="view_products.php">View Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="manage_members.php">Manage Members</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="add_category.php">Add Category</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="add_discount.php">Add Discount</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i> Profile
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle me-2"></i> See Profile</a></li>
-                            <li><button class="dropdown-item" onclick="updatePersonalInfo()"><i class="bi bi-pencil-square me-2"></i> Update Info</button></li>
-                            <li><button class="dropdown-item" onclick="updatePassword()"><i class="bi bi-key me-2"></i> Update Password</button></li>
-                            <li><button class="dropdown-item text-danger" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i> Logout</button></li>
-                        </ul>
-                    </li>
+    <!-- Sidebar (keep only one instance) -->
+    <div class="sidebar bg-dark text-white">
+        <div class="sidebar-header p-3">
+            <h3 class="text-center">Mura Lahat Store</h3>
+        </div>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_product.php' ? 'active' : '' ?>" href="add_product.php">
+                    <i class="bi bi-plus-circle me-2"></i> Add Product
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'view_products.php' ? 'active' : '' ?>" href="view_products.php">
+                    <i class="bi bi-list-ul me-2"></i> View Products
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'manage_members.php' ? 'active' : '' ?>" href="manage_members.php">
+                    <i class="bi bi-people me-2"></i> Manage Members
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_category.php' ? 'active' : '' ?>" href="add_category.php">
+                    <i class="bi bi-tag me-2"></i> Add Category
+                </a>
+            </li>
+        </ul>
+        <div class="sidebar-footer p-3">
+            <div class="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle me-2"></i> Profile
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle me-2"></i> See Profile</a></li>
+                    <li><button class="dropdown-item" onclick="updatePersonalInfo()"><i class="bi bi-pencil-square me-2"></i> Update Info</button></li>
+                    <li><button class="dropdown-item" onclick="updatePassword()"><i class="bi bi-key me-2"></i> Update Password</button></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><button class="dropdown-item text-danger" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i> Logout</button></li>
                 </ul>
             </div>
         </div>
-    </nav>
- 
-    <!-- Add Product Form -->
-    <div class="container">
-        <h2 class="section-title text-center">Add New Product</h2>
-        <form action="add_product.php" method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="prod_name" class="form-label">Product Name</label>
-                <input type="text" class="form-control" id="prod_name" name="prod_name" required>
-            </div>
-            <div class="mb-3">
-                <label for="prod_quantity" class="form-label">Quantity</label>
-                <input type="number" class="form-control" id="prod_quantity" name="prod_quantity" min="0" required>
-            </div>
-            <div class="mb-3">
-                <label for="prod_price" class="form-label">Price</label>
-                <input type="number" step="0.01" class="form-control" id="prod_price" name="prod_price" min="0" required>
-            </div>
-            <div class="mb-3">
-                <label for="price_effective_from" class="form-label">Price Effective From</label>
-                <input type="date" class="form-control" id="price_effective_from" name="price_effective_from" value="<?php echo date('Y-m-d'); ?>" required>
-            </div>
-            <div class="mb-3">
-                <label for="price_effective_to" class="form-label">Price Effective To (Optional)</label>
-                <input type="date" class="form-control" id="price_effective_to" name="price_effective_to">
-            </div>
-            <div class="mb-3">
-                <label for="prod_image" class="form-label">Product Image (Optional, max 2MB)</label>
-                <input type="file" class="form-control" id="prod_image" name="prod_image" accept="image/jpeg,image/png">
-            </div>
-            <div class="mb-3">
-                <label for="category_ids" class="form-label">Categories (Optional)</label>
-                <select class="form-select" id="category_ids" name="category_ids[]" multiple>
-                    <?php
-                    $categories = $con->viewCategory();
-                    foreach ($categories as $category) {
-                        echo "<option value='{$category['Category_ID']}'>{$category['Category_Name']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Add Product</button>
-            </div>
-        </form>
     </div>
- 
+
+    <!-- Add Product Form -->
+    <div class="main-content">
+        <div class="container">
+            <h2 class="section-title text-center">Add New Product</h2>
+            <form action="add_product.php" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="prod_name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="prod_name" name="prod_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="prod_quantity" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" id="prod_quantity" name="prod_quantity" min="0" required>
+                </div>
+                <div class="mb-3">
+                    <label for="prod_price" class="form-label">Price</label>
+                    <input type="number" step="0.01" class="form-control" id="prod_price" name="prod_price" min="0" required>
+                </div>
+                <div class="mb-3">
+                    <label for="price_effective_from" class="form-label">Price Effective From</label>
+                    <input type="date" class="form-control" id="price_effective_from" name="price_effective_from" value="<?php echo date('Y-m-d'); ?>" required>
+                </div>
+                <div class="mb-3">
+                    <label for="price_effective_to" class="form-label">Price Effective To (Optional)</label>
+                    <input type="date" class="form-control" id="price_effective_to" name="price_effective_to">
+                </div>
+                <div class="mb-3">
+                    <label for="prod_image" class="form-label">Product Image (Optional, max 2MB)</label>
+                    <input type="file" class="form-control" id="prod_image" name="prod_image" accept="image/jpeg,image/png">
+                </div>
+                <div class="mb-3">
+                    <label for="category_ids" class="form-label">Categories (Optional)</label>
+                    <select class="form-select" id="category_ids" name="category_ids[]" multiple>
+                        <?php
+                        $categories = $con->viewCategory();
+                        foreach ($categories as $category) {
+                            echo "<option value='{$category['Category_ID']}'>{$category['Category_Name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Bootstrap JS and Popper.js -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <!-- Custom JavaScript -->
     <script>
         // Client-side validation for Effective From date
@@ -391,5 +491,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     </script>
 </body>
-</html>
  

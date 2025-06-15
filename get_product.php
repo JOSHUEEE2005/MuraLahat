@@ -18,6 +18,7 @@ try {
     }
 
     $productId = $input['productId'] ?? null;
+    error_log("Get Product Request: Product ID = $productId");
 
     if (!$productId) {
         throw new Exception('Missing product ID');
@@ -27,9 +28,11 @@ try {
     $product = $con->getProductDetails($productId);
 
     if (!$product) {
+        error_log("Get Product Error: Product ID $productId not found in database");
         throw new Exception('Product not found');
     }
 
+    error_log("Get Product Success: Product ID $productId retrieved");
     echo json_encode(['success' => true, 'product' => $product]);
 
 } catch (Exception $e) {

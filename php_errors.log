@@ -34,3 +34,46 @@ Received: customerId=1, cashPaid=4000Received: customerId=1, cashPaid=5000Receiv
 [14-Jun-2025 12:42:35 Europe/Berlin] Add Membership Error: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`testml2`.`customer`, CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`CA_ID`) REFERENCES `customer_address` (`CA_ID`) ON UPDATE CASCADE) in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 188
 [14-Jun-2025 12:46:10 Europe/Berlin] Add Membership Error: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`testml2`.`customer`, CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`CA_ID`) REFERENCES `customer_address` (`CA_ID`) ON UPDATE CASCADE) in D:\XAMPP\htdocs\MuraLahat\classes\database.php on line 188
 [14-Jun-2025 13:21:41 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 3
+[14-Jun-2025 18:13:16 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 1
+Received: customerId=1, cashPaid=1800Received: customerId=1, cashPaid=900Received: customerId=0, cashPaid=1444Received: customerId=0, cashPaid=2044Received: customerId=0, cashPaid=2044[15-Jun-2025 10:33:44 Europe/Berlin] Delete Member Success: Membership_Status set to 0 for Customer ID 2
+Received: customerId=, cashPaid=4500[15-Jun-2025 15:53:54 Europe/Berlin] Get Product Error: Product not found in C:\xampp\htdocs\collab\get_product.php on line 30
+[15-Jun-2025 15:54:04 Europe/Berlin] Get Product Error: Product not found in C:\xampp\htdocs\collab\get_product.php on line 30
+[15-Jun-2025 15:57:24 Europe/Berlin] Get Product Error: Product not found in C:\xampp\htdocs\collab\get_product.php on line 30
+[15-Jun-2025 15:58:19 Europe/Berlin] Get Product Error: Product not found in C:\xampp\htdocs\collab\get_product.php on line 30
+[15-Jun-2025 15:58:22 Europe/Berlin] Get Product Error: Product not found in C:\xampp\htdocs\collab\get_product.php on line 30
+[15-Jun-2025 16:01:45 Europe/Berlin] Get Product Request: Product ID = 1
+[15-Jun-2025 16:01:45 Europe/Berlin] Get Product Details Success: Product ID 1 retrieved
+[15-Jun-2025 16:01:45 Europe/Berlin] Get Product Success: Product ID 1 retrieved
+[15-Jun-2025 16:02:20 Europe/Berlin] Update Product Request: Product ID = 1, Name = Kwek Kwek, Stock Mode = set, Stock = 20, Price = 30, Categories = 3
+[15-Jun-2025 16:02:20 Europe/Berlin] Update Product Success: Product ID 1 updated
+[15-Jun-2025 16:02:20 Europe/Berlin] Update Product Result: {"success":true}
+[15-Jun-2025 16:02:27 Europe/Berlin] Get Product Request: Product ID = 1
+[15-Jun-2025 16:02:27 Europe/Berlin] Get Product Details Success: Product ID 1 retrieved
+[15-Jun-2025 16:02:27 Europe/Berlin] Get Product Success: Product ID 1 retrieved
+[15-Jun-2025 16:14:13 Europe/Berlin] Get Product Request: Product ID = 1
+[15-Jun-2025 16:14:13 Europe/Berlin] Get Product Details Success: Product ID 1 retrieved
+[15-Jun-2025 16:14:13 Europe/Berlin] Get Product Success: Product ID 1 retrieved
+[15-Jun-2025 16:14:31 Europe/Berlin] Update Product Request: Product ID = , Name = , Stock Mode = , Stock = , Price = , Categories = , Image = None
+[15-Jun-2025 16:14:31 Europe/Berlin] Update Product Error: Missing or invalid input fields in C:\xampp\htdocs\collab\process_update_product.php on line 53
+[15-Jun-2025 16:14:33 Europe/Berlin] Get Product Request: Product ID = 1
+[15-Jun-2025 16:14:33 Europe/Berlin] Get Product Details Success: Product ID 1 retrieved
+[15-Jun-2025 16:14:33 Europe/Berlin] Get Product Success: Product ID 1 retrieved
+[15-Jun-2025 16:14:35 Europe/Berlin] Update Product Request: Product ID = , Name = , Stock Mode = , Stock = , Price = , Categories = , Image = None
+[15-Jun-2025 16:14:35 Europe/Berlin] Update Product Error: Missing or invalid input fields in C:\xampp\htdocs\collab\process_update_product.php on line 53
+[15-Jun-2025 16:14:37 Europe/Berlin] Get Product Request: Product ID = 5
+[15-Jun-2025 16:14:37 Europe/Berlin] Get Product Details Success: Product ID 5 retrieved
+[15-Jun-2025 16:14:37 Europe/Berlin] Get Product Success: Product ID 5 retrieved
+[15-Jun-2025 16:14:40 Europe/Berlin] Update Product Request: Product ID = , Name = , Stock Mode = , Stock = , Price = , Categories = , Image = None
+[15-Jun-2025 16:14:40 Europe/Berlin] Update Product Error: Missing or invalid input fields in C:\xampp\htdocs\collab\process_update_product.php on line 53
+[15-Jun-2025 16:19:48 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Kwek Kwek","stockMode":"set","prodStock":20,"prodPrice":30,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[3],"hasFile":true}
+[15-Jun-2025 16:19:48 Europe/Berlin] Update Product Success: Product ID 1 updated
+[15-Jun-2025 16:19:48 Europe/Berlin] Update Product Result: {"success":true}
+[15-Jun-2025 16:21:44 Europe/Berlin] Update Product Request: {"productId":"4","prodName":"vape v2 chocolate","stockMode":"set","prodStock":32,"prodPrice":544,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[1,2],"hasFile":true}
+[15-Jun-2025 16:21:44 Europe/Berlin] Update Product Success: Product ID 4 updated
+[15-Jun-2025 16:21:44 Europe/Berlin] Update Product Result: {"success":true}
+[15-Jun-2025 16:22:50 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Kwek Kwek","stockMode":"set","prodStock":23,"prodPrice":30,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[3],"hasFile":false}
+[15-Jun-2025 16:22:50 Europe/Berlin] Update Product Success: Product ID 1 updated
+[15-Jun-2025 16:22:50 Europe/Berlin] Update Product Result: {"success":true}
+Received: customerId=, cashPaid=700Received: customerId=, cashPaid=2000[15-Jun-2025 16:41:19 Europe/Berlin] Update Product Request: {"productId":"3","prodName":"vape v2 chocolate","stockMode":"set","prodStock":35,"prodPrice":500,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[1],"hasFile":true}
+[15-Jun-2025 16:41:19 Europe/Berlin] Update Product Success: Product ID 3 updated
+[15-Jun-2025 16:41:19 Europe/Berlin] Update Product Result: {"success":true}

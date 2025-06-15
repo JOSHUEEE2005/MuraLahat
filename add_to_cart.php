@@ -1,36 +1,40 @@
 <?php
 session_start();
-require_once('classes/database.php');
+require_once 'classes/database.php';
+
+$response = ['success' => false, 'error' => ''];
+
+try {
+    $data = json_decode(file_get_contents('php://input'), true);
+    
+    if (!isset($_SESSION['customer_id'])) {
+        throw new Exception('Customer not logged in');
+    }
+    
+    if (!isset($data['productId']) || !isset($data['quantity']) || !isset($data['price'])) {
+        throw new Exception('Invalid cart data');
+    }
+    
+    $con = new database();
+    $result = $con->addToCart($_SESSION['customer_id'], $data['productId'], $data['quantity'], $data['price']);
+    
+    if ($result['success']) {
+        $cartItems = $con->getCart($_SESSION['customer_id']);
+        $cartTotal = array_sum(array_map(function($item) {
+            return floatval($item['Quantity']) * floatval($item['Price']);
+        }, $cartItems));
+        $cartCount = count($cartItems);
+        
+        $response['success'] = true;
+        $response['cartTotal'] = $cartTotal;
+        $response['cartCount'] = $cartCount;
+    } else {
+        $response['error'] = $result['error'];
+    }
+} catch (Exception $e) {
+    $response['error'] = $e->getMessage();
+}
 
 header('Content-Type: application/json');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents('php://input'), true);
-    $customerId = $data['customerId'] ?? $_SESSION['customer_id'] ?? 1; // Fallback to 1 if not set
-    $productId = $data['productId'] ?? 0;
-    $quantity = $data['quantity'] ?? 0;
-    $price = $data['price'] ?? 0;
-
-    if ($productId <= 0 || $quantity <= 0 || $price <= 0) {
-        echo json_encode(['success' => false, 'error' => 'Invalid input data']);
-        exit;
-    }
-
-    $con = new database();
-    $result = $con->addToCart($customerId, $productId, $quantity, $price);
-
-    if ($result['success']) {
-        // Fetch updated cart to calculate total
-        $cartItems = $con->getCart($customerId);
-        $total = array_sum(array_map(function($item) {
-            return $item['Quantity'] * $item['Price'];
-        }, $cartItems));
-        $result['cartTotal'] = number_format($total, 2);
-        $result['cartCount'] = count($cartItems);
-    }
-
-    echo json_encode($result);
-} else {
-    echo json_encode(['success' => false, 'error' => 'Invalid request method']);
-}
+echo json_encode($response);
 ?>

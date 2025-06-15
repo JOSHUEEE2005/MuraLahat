@@ -18,6 +18,7 @@ try {
     }
 
     $productId = $input['productId'] ?? null;
+    error_log("Delete Product Request: Product ID = $productId");
 
     if (!$productId) {
         throw new Exception('Missing product ID');
@@ -26,6 +27,7 @@ try {
     $con = new database();
     $result = $con->deleteProduct($productId);
 
+    error_log("Delete Product Result: " . json_encode($result));
     echo json_encode($result);
 
 } catch (Exception $e) {

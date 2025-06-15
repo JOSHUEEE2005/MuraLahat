@@ -104,7 +104,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['position'] !== 'Admin') {
                 </a>
             </div>
             <div class="col">
-                <a href="Registration.php" class="text-decoration-none">
+                <a href="Register.php" class="text-decoration-none">
                     <div class="card dashboard-card">
                         <img src="https://via.placeholder.com/300x150?text=Register" class="dashboard-img" alt="Register">
                         <div class="card-body">
