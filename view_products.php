@@ -43,9 +43,37 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
+        /* Ensure box-sizing is applied globally */
         * {
             box-sizing: border-box;
         }
+
+        /* Body Styles */
+        body {
+            background-image: url('button_images/otsootso.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            position: relative;
+            margin: 0;
+            min-height: 100vh;
+            overflow-x: auto;
+        }
+
+        /* Add a semi-transparent overlay to improve text readability */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            z-index: -1;
+        }
+
+        /* Sidebar Styles */
         .sidebar {
             position: fixed;
             top: 0;
@@ -55,10 +83,25 @@ try {
             z-index: 1000;
             transition: all 0.3s;
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            background-color: #e90e00;
         }
+
         .sidebar-header {
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
+            text-align: center;
         }
+
+        .sidebar img {
+            height: 200px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar img:hover {
+            transform: scale(1.1);
+        }
+
         .sidebar .nav-link {
             color: rgba(255,255,255,0.8);
             padding: 12px 20px;
@@ -66,96 +109,96 @@ try {
             border-radius: 5px;
             transition: all 0.3s;
         }
+
         .sidebar .nav-link:hover {
             color: white;
             background-color: rgba(255,255,255,0.1);
         }
+
         .sidebar .nav-link.active {
             color: white;
             background-color: rgba(0,123,255,0.2);
             border-left: 3px solid #0d6efd;
         }
+
         .sidebar-footer {
             position: absolute;
             bottom: 0;
             width: 100%;
             border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 15px;
         }
+
+        /* Main Content Styles */
         .main-content {
             margin-left: 250px;
             padding: 20px;
             transition: all 0.3s;
             min-width: calc(100vw - 250px);
         }
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: auto;
-        }
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .table-container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 30px;
-        }
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #343a40;
-            margin-bottom: 30px;
-        }
-        .btn-delete {
-            background-color: #dc3545;
-            border: none;
-            border-radius: 50px;
-            padding: 5px 15px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
+
         .container {
             max-width: 1200px;
+            background: transparent;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+            position: relative;
+            z-index: 1;
         }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
             background: #ffffff;
-            margin-bottom: 20px;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            height: auto;
         }
+
         .product-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
+
         .product-img {
             width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-bottom: 1px solid #dee2e6;
+            height: 150px;
+            object-fit: contain;
+            display: block;
         }
+
         .product-title {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
             color: #343a40;
-            margin-bottom: 10px;
+            margin-top: 10px;
         }
+
         .product-price {
             font-size: 1.15rem;
             font-weight: 500;
             color: #28a745;
         }
+
         .stock-info {
             font-size: 0.95rem;
             color: #6c757d;
             margin-bottom: 15px;
         }
+
         .btn-add-to-cart {
             background-color: #007bff;
             border: none;
@@ -164,9 +207,11 @@ try {
             font-weight: 500;
             transition: background-color 0.3s ease;
         }
+
         .btn-add-to-cart:hover {
             background-color: #0056b3;
         }
+
         .btn-view-cart {
             background-color: #17a2b8;
             border: none;
@@ -179,9 +224,11 @@ try {
             right: 20px;
             z-index: 1000;
         }
+
         .btn-view-cart:hover {
             background-color: #138496;
         }
+
         .btn-membership {
             background-color: #ffc107;
             border: none;
@@ -194,43 +241,60 @@ try {
             right: 20px;
             z-index: 1000;
         }
+
         .btn-membership:hover {
             background-color: #e0a800;
         }
+
         .cart-total {
             font-size: 1.1rem;
             font-weight: 600;
             color: #343a40;
             margin-bottom: 20px;
         }
+
+        .cart-table {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         .cart-table img {
             width: 50px;
             height: 50px;
             object-fit: cover;
             border-radius: 4px;
         }
+
         .cart-table th, .cart-table td {
             vertical-align: middle;
         }
+
         .btn-remove-item {
             background-color: #dc3545;
             border: none;
             border-radius: 50px;
             padding: 5px 15px;
             font-size: 0.9rem;
+            transition: background-color 0.3s ease;
         }
+
         .btn-remove-item:hover {
             background-color: #c82333;
         }
+
         .category-section {
             margin-bottom: 40px;
         }
+
         .category-title {
             font-size: 1.8rem;
             font-weight: 600;
             color: #343a40;
             position: relative;
+            margin-bottom: 20px;
         }
+
         .category-title::after {
             content: '';
             position: absolute;
@@ -240,50 +304,69 @@ try {
             height: 3px;
             background-color: #007bff;
         }
+
+        /* Responsive Styles */
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
                 overflow: hidden;
             }
+
             .sidebar .nav-link span,
             .sidebar-header h3,
             .sidebar .dropdown-toggle span {
                 display: none;
             }
+
             .sidebar .nav-link {
                 text-align: center;
                 padding: 12px 5px;
             }
+
             .sidebar .nav-link i {
                 margin-right: 0;
                 font-size: 1.2rem;
             }
+
             .main-content {
                 margin-left: 70px;
                 min-width: calc(100vw - 70px);
             }
+
+            .container {
+                max-width: 100%;
+                padding: 20px;
+            }
         }
+
         @media (max-width: 576px) or (max-device-width: 576px) {
             .sidebar {
                 width: 60px;
             }
+
             .main-content {
                 margin-left: 60px;
                 min-width: calc(100vw - 60px);
             }
+
             .container {
+                margin-top: 20px;
                 padding: 15px;
             }
+
             .btn-view-cart, .btn-membership {
                 width: 150px;
                 right: 10px;
             }
+
             .btn-membership {
                 bottom: 80px;
             }
+
             .cart-table {
                 font-size: 0.9rem;
             }
+
             .cart-table img {
                 width: 40px;
                 height: 40px;
@@ -292,45 +375,29 @@ try {
     </style>
 </head>
 <body>
-    <div class="sidebar bg-dark text-white">
+    <!-- Sidebar -->
+    <div class="sidebar text-white">
         <div class="sidebar-header p-3">
-            <h3 class="text-center">Mura Lahat Store</h3>
+            <h3 class="text-center"><img src="button_images/jobart.png" alt="logo"></h3>
         </div>
         <ul class="nav flex-column">
+           
             <li class="nav-item">
-                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_product.php' ? 'active' : '' ?>" href="add_product.php">
-                    <i class="bi bi-plus-circle me-2"></i> Add Product
-                </a>
+                <a class="nav-link" href="add_product.php"><i class="bi bi-plus-circle me-2"></i><span>Add Product</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'view_products.php' ? 'active' : '' ?>" href="view_products.php">
-                    <i class="bi bi-list-ul me-2"></i> View Products
-                </a>
+                <a class="nav-link" href="view_products.php"><i class="bi bi-list-ul me-2"></i><span>View Products</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'manage_members.php' ? 'active' : '' ?>" href="manage_members.php">
-                    <i class="bi bi-people me-2"></i> Manage Members
-                </a>
+                <a class="nav-link" href="manage_members.php"><i class="bi bi-people me-2"></i><span>Manage Members</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?= basename($_SERVER['PHP_SELF']) == 'add_category.php' ? 'active' : '' ?>" href="add_category.php">
-                    <i class="bi bi-tag me-2"></i> Add Category
-                </a>
+                <a class="nav-link" href="add_category.php"><i class="bi bi-tag me-2"></i><span>Add Category</span></a>
             </li>
+           
         </ul>
-        <div class="sidebar-footer p-3">
-            <div class="dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle me-2"></i> Profile
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-                    <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle me-2"></i> See Profile</a></li>
-                    <li><button class="dropdown-item" onclick="updatePersonalInfo()"><i class="bi bi-pencil-square me-2"></i> Update Info</button></li>
-                    <li><button class="dropdown-item" onclick="updatePassword()"><i class="bi bi-key me-2"></i> Update Password</button></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><button class="dropdown-item text-danger" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i> Logout</button></li>
-                </ul>
-            </div>
+        <div class="sidebar-footer">
+            <a class="nav-link " href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i><span>Logout</span></a>
         </div>
     </div>
     <div class="main-content">
@@ -338,7 +405,6 @@ try {
             <h2 class="section-title">Our Products</h2>
             <div class="cart-total">Cart Total: ₱<span id="cartTotal"><?php echo number_format($cartTotal, 2); ?></span> (<span id="cartCount"><?php echo $cartCount; ?></span> items)</div>
             <?php
-            // Group products by individual categories
             $groupedProducts = [];
             foreach ($products as $product) {
                 $categoryNames = !empty($product['Category_Names']) ? explode(',', $product['Category_Names']) : ['Uncategorized'];
@@ -347,13 +413,12 @@ try {
                     if (!isset($groupedProducts[$categoryName])) {
                         $groupedProducts[$categoryName] = [];
                     }
-                    // Avoid duplicating products within the same category
                     if (!in_array($product['Product_ID'], array_column($groupedProducts[$categoryName], 'Product_ID'))) {
                         $groupedProducts[$categoryName][] = $product;
                     }
                 }
             }
-            ksort($groupedProducts); // Sort categories alphabetically
+            ksort($groupedProducts);
             foreach ($groupedProducts as $categoryName => $categoryProducts): ?>
                 <div class="category-section mb-5">
                     <h3 class="category-title mb-4"><?php echo htmlspecialchars($categoryName); ?></h3>
@@ -388,50 +453,7 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
     <script>
-        function showCustomerTypeModal() {
-            Swal.fire({
-                title: 'Are you a member?',
-                showDenyButton: true,
-                showCancelButton: false,
-                confirmButtonText: 'Yes, I am a member',
-                denyButtonText: 'No, I am a guest',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    denyButton: 'btn btn-secondary'
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('membershipButton').click();
-                } else if (result.isDenied) {
-                    fetch('create_guest_session.php')
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                window.location.reload();
-                            }
-                        });
-                }
-            });
-        }
-        <?php if (!isset($_SESSION['customer_type'])): ?>
-        document.addEventListener('DOMContentLoaded', function() {
-            showCustomerTypeModal();
-        });
-        <?php endif; ?>
         function showAddToCartModal(productId, productName, price, stock) {
-            if (!<?php echo isset($_SESSION['customer_type']) ? 'true' : 'false'; ?>) {
-                showCustomerTypeModal();
-                return;
-            }
-            if (!productId || !productName || isNaN(price) || isNaN(stock)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Invalid product data.',
-                    customClass: { confirmButton: 'btn btn-secondary' }
-                });
-                return;
-            }
             Swal.fire({
                 title: `Add ${productName} to Cart`,
                 html: `
@@ -444,10 +466,7 @@ try {
                 showCancelButton: true,
                 confirmButtonText: 'Add to Cart',
                 cancelButtonText: 'Cancel',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-secondary'
-                },
+                customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-secondary' },
                 preConfirm: () => {
                     const quantity = parseInt(document.getElementById('quantity').value);
                     if (!quantity || isNaN(quantity) || quantity < 1 || quantity > stock) {
@@ -513,19 +532,13 @@ try {
                 showCancelButton: true,
                 confirmButtonText: 'Remove',
                 cancelButtonText: 'Cancel',
-                customClass: {
-                    confirmButton: 'btn btn-danger',
-                    cancelButton: 'btn btn-secondary'
-                }
+                customClass: { confirmButton: 'btn btn-danger', cancelButton: 'btn btn-secondary' }
             }).then((result) => {
                 if (result.isConfirmed) {
                     fetch('remove_from_cart.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            customerId: <?php echo isset($_SESSION['customer_id']) ? json_encode($_SESSION['customer_id']) : 'null'; ?>,
-                            cartId
-                        })
+                        body: JSON.stringify({ cartId })
                     })
                     .then(response => response.json())
                     .then(data => {
@@ -538,6 +551,8 @@ try {
                             }).then(() => {
                                 document.getElementById('cartTotal').textContent = parseFloat(data.cartTotal).toFixed(2);
                                 document.getElementById('cartCount').textContent = data.cartCount;
+                                const cartRow = document.querySelector(`tr[data-cart-id="${cartId}"]`);
+                                if (cartRow) cartRow.remove();
                             });
                         } else {
                             Swal.fire({
@@ -560,10 +575,6 @@ try {
             });
         }
         document.getElementById('viewCartButton').addEventListener('click', function() {
-            if (!<?php echo isset($_SESSION['customer_type']) ? 'true' : 'false'; ?>) {
-                showCustomerTypeModal();
-                return;
-            }
             fetch('get_cart.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -573,8 +584,9 @@ try {
             })
             .then(response => response.json())
             .then(data => {
+                console.log('Cart Data:', data);
                 const cartItems = data.items;
-                if (cartItems.length === 0) {
+                if (!data.success || cartItems.length === 0) {
                     Swal.fire({
                         icon: 'info',
                         title: 'Cart is Empty',
@@ -603,7 +615,7 @@ try {
                                 total += itemTotal;
                                 const imageSrc = item.Product_Image && item.Product_Image !== 'NULL' ? item.Product_Image : 'https://via.placeholder.com/50x50?text=' + encodeURIComponent(item.Product_Name);
                                 return `
-                                    <tr>
+                                    <tr data-cart-id="${item.Cart_ID}">
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <img src="${imageSrc}" alt="${item.Product_Name || 'Unknown Product'}">
@@ -614,7 +626,7 @@ try {
                                         <td>${quantity}</td>
                                         <td>₱${itemTotal.toFixed(2)}</td>
                                         <td>
-                                            <button class="btn btn-remove-item" onclick="removeFromCart(${item.Cart_ID}, '${item.Product_Name.replace(/'/g, "\\'")}')">
+                                            <button class="btn btn-remove-item" onclick="removeFromCart('${item.Cart_ID}', '${item.Product_Name.replace(/'/g, "\\'")}')">
                                                 <i class="bi bi-trash"></i>
                                             </button>
                                         </td>
@@ -632,10 +644,7 @@ try {
                     showCancelButton: true,
                     confirmButtonText: 'Proceed to Payment',
                     cancelButtonText: 'Close',
-                    customClass: {
-                        confirmButton: 'btn btn-primary',
-                        cancelButton: 'btn btn-secondary'
-                    },
+                    customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-secondary' },
                     width: '800px'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -653,6 +662,7 @@ try {
                 });
             })
             .catch(error => {
+                console.error('Cart Fetch Error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Connection Error',
@@ -668,143 +678,199 @@ try {
                     <p>Total Amount: ₱${parseFloat(total).toFixed(2)}</p>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="radio" name="customerType" id="guestCustomer" value="guest" checked>
-                        <label class="form-check-label" for="guestCustomer">
-                            Guest Checkout
-                        </label>
+                        <label class="form-check-label" for="guestCustomer">Guest Checkout</label>
                     </div>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="radio" name="customerType" id="memberCustomer" value="member">
-                        <label class="form-check-label" for="memberCustomer">
-                            Member Checkout
-                        </label>
+                        <label class="form-check-label" for="memberCustomer">Member Checkout</label>
                     </div>
                     <div id="memberFields" style="display:none;">
                         <label for="customerId" class="form-label">Customer ID</label>
                         <input type="text" id="customerId" class="swal2-input" placeholder="Enter your member number">
+                        <div id="pointsFields" style="display:none;">
+                            <p id="pointsBalance"></p>
+                            <p id="pointsToUse"></p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="usePoints" name="usePoints">
+                                <label class="form-check-label" for="usePoints">Use Points for Discount</label>
+                            </div>
+                        </div>
                     </div>
+                    <p id="discountedTotal" class="mt-3">Amount to Pay: ₱${parseFloat(total).toFixed(2)}</p>
                     <label for="cashPaid" class="form-label">Cash Paid</label>
-                    <input type="number" id="cashPaid" class="swal2-input" min="${total}" step="0.01" required>
+                    <input type="number" id="cashPaid" class="swal2-input" min="0" step="0.01" required>
                     <p id="change" class="mt-3">Change: ₱0.00</p>
                 `,
                 showCancelButton: true,
                 confirmButtonText: 'Complete Purchase',
                 cancelButtonText: 'Cancel',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-secondary'
-                },
-                didOpen: () => {
-                    document.querySelectorAll('input[name="customerType"]').forEach(radio => {
-                        radio.addEventListener('change', function() {
-                            document.getElementById('memberFields').style.display =
-                                this.value === 'member' ? 'block' : 'none';
-                        });
-                    });
-                    document.getElementById('cashPaid').addEventListener('input', function() {
-                        const cashPaid = parseFloat(this.value) || 0;
-                        const change = cashPaid - total;
-                        document.getElementById('change').textContent = `Change: ₱${change.toFixed(2)}`;
-                    });
-                },
+                customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-secondary' },
                 preConfirm: () => {
                     const customerType = document.querySelector('input[name="customerType"]:checked').value;
                     const cashPaid = parseFloat(document.getElementById('cashPaid').value);
-                    if (isNaN(cashPaid) || cashPaid < total) {
-                        Swal.showValidationMessage('Please enter a valid cash amount');
-                        return false;
-                    }
+                    let customerId = null;
+                    let usePoints = false;
+                    let discountedTotal = total;
+
                     if (customerType === 'member') {
-                        const customerId = document.getElementById('customerId').value.trim();
-                        if (!customerId) {
-                            Swal.showValidationMessage('Please enter your customer ID');
+                        customerId = document.getElementById('customerId').value.trim();
+                        if (!customerId || isNaN(customerId)) {
+                            Swal.showValidationMessage('Please enter a valid Customer ID');
                             return false;
                         }
-                        return { customerType, customerId, cashPaid };
+                        usePoints = document.getElementById('usePoints').checked;
+                        if (usePoints) {
+                            const pointsToUse = parseInt(document.getElementById('pointsToUse').dataset.points || 0);
+                            discountedTotal = Math.max(0, total - pointsToUse);
+                        }
                     }
-                    return { customerType, cashPaid };
+
+                    if (isNaN(cashPaid) || cashPaid < discountedTotal) {
+                        Swal.showValidationMessage(`Cash paid must be at least ₱${discountedTotal.toFixed(2)}`);
+                        return false;
+                    }
+
+                    return { customerType, customerId, cashPaid, total, usePoints };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const { customerType, customerId, cashPaid } = result.value;
-                    processTransaction(cashPaid, total, customerType === 'member' ? customerId : null);
+                    const { customerType, customerId, cashPaid, total, usePoints } = result.value;
+                    processTransaction(customerType, customerId, cashPaid, total, usePoints);
                 }
             });
+
+            const customerTypeRadios = document.querySelectorAll('input[name="customerType"]');
+            const memberFields = document.getElementById('memberFields');
+            const pointsFields = document.getElementById('pointsFields');
+            const customerIdInput = document.getElementById('customerId');
+            const pointsBalance = document.getElementById('pointsBalance');
+            const pointsToUse = document.getElementById('pointsToUse');
+            const usePointsCheckbox = document.getElementById('usePoints');
+            const cashPaidInput = document.getElementById('cashPaid');
+            const discountedTotalElement = document.getElementById('discountedTotal');
+            const changeElement = document.getElementById('change');
+
+            customerTypeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    memberFields.style.display = this.value === 'member' ? 'block' : 'none';
+                    pointsFields.style.display = 'none';
+                    pointsBalance.textContent = '';
+                    pointsToUse.textContent = '';
+                    usePointsCheckbox.checked = false;
+                    cashPaidInput.value = '';
+                    discountedTotalElement.textContent = `Amount to Pay: ₱${total.toFixed(2)}`;
+                    changeElement.textContent = 'Change: ₱0.00';
+                });
+            });
+
+            customerIdInput.addEventListener('blur', function() {
+                const customerId = this.value.trim();
+                if (customerId && !isNaN(customerId)) {
+                    fetch('get_customer_points.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ customerId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            pointsFields.style.display = 'block';
+                            pointsBalance.textContent = `Available Points: ${data.points}`;
+                            const pointsUsable = Math.min(data.points, Math.floor(total));
+                            pointsToUse.textContent = `Points to Use: ${pointsUsable}`;
+                            pointsToUse.dataset.points = pointsUsable;
+                            updatePaymentDetails();
+                        } else {
+                            pointsFields.style.display = 'none';
+                            Swal.showValidationMessage(data.error || 'Invalid Customer ID');
+                        }
+                    })
+                    .catch(error => {
+                        pointsFields.style.display = 'none';
+                        Swal.showValidationMessage(`Failed to fetch points: ${error.message}`);
+                    });
+                }
+            });
+
+            function updatePaymentDetails() {
+                let discountedTotal = total;
+                if (usePointsCheckbox.checked && pointsToUse.dataset.points) {
+                    const pointsUsable = parseInt(pointsToUse.dataset.points);
+                    discountedTotal = Math.max(0, total - pointsUsable);
+                }
+                discountedTotalElement.textContent = `Amount to Pay: ₱${discountedTotal.toFixed(2)}`;
+                cashPaidInput.min = discountedTotal;
+
+                const cashPaid = parseFloat(cashPaidInput.value) || 0;
+                const change = cashPaid >= discountedTotal ? cashPaid - discountedTotal : 0;
+                changeElement.textContent = `Change: ₱${change.toFixed(2)}`;
+            }
+
+            usePointsCheckbox.addEventListener('change', updatePaymentDetails);
+            cashPaidInput.addEventListener('input', updatePaymentDetails);
         }
-        function processTransaction(cashPaid, total, customerId = null) {
+        function processTransaction(customerType, customerId, cashPaid, total, usePoints) {
             fetch('process_transaction.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    customerId: customerId,
+                    customerType,
+                    customerId,
                     cashPaid,
-                    total
+                    total,
+                    usePoints
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     Swal.fire({
-                        title: 'Transaction Completed',
                         icon: 'success',
+                        title: 'Purchase Complete',
                         html: `
-                            <p>Transaction completed successfully!</p>
-                            <p>Total: ₱${data.total}</p>
-                            <p>Change: ₱${data.change}</p>
-                            ${customerId ? `<p>Member: ${customerId}</p>` : '<p>Guest checkout</p>'}
+                            <p>Total: ₱${parseFloat(data.total).toFixed(2)}</p>
+                            <p>Change: ₱${parseFloat(data.change).toFixed(2)}</p>
+                            ${data.pointsUsed > 0 ? `<p>Points Used: ${data.pointsUsed}</p>` : ''}
+                            ${data.pointsEarned > 0 ? `<p>Points Earned: ${data.pointsEarned}</p>` : ''}
                         `,
                         customClass: { confirmButton: 'btn btn-primary' }
                     }).then(() => {
                         document.getElementById('cartTotal').textContent = '0.00';
                         document.getElementById('cartCount').textContent = '0';
-                        if (data.items) {
-                            data.items.forEach(item => {
-                                updateProductStock(item.Product_ID, item.Quantity);
-                            });
-                        }
                     });
                 } else {
                     Swal.fire({
-                        title: 'Error',
                         icon: 'error',
-                        text: data.error || 'Transaction failed',
+                        title: 'Error',
+                        text: data.error || 'Transaction failed.',
                         customClass: { confirmButton: 'btn btn-secondary' }
                     });
                 }
             })
             .catch(error => {
                 Swal.fire({
-                    title: 'Error',
                     icon: 'error',
-                    text: 'Failed to process transaction',
+                    title: 'Connection Error',
+                    text: `Failed to connect to server: ${error.message}`,
                     customClass: { confirmButton: 'btn btn-secondary' }
                 });
             });
         }
         document.getElementById('membershipButton').addEventListener('click', function() {
             Swal.fire({
-                title: 'Join Premium Membership',
+                title: 'Become a Member',
                 html: `
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" id="firstName" class="swal2-input" required>
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" id="lastName" class="swal2-input" required>
-                    <label for="phoneNumber" class="form-label">Phone No.</label>
-                    <input type="text" id="phoneNumber" class="swal2-input" required>
-                    <div class="card-header bg-info text-white m-3">Address Information</div>
-                    <label for="street" class="form-label">Street</label>
-                    <input type="text" id="street" class="swal2-input" required>
-                    <label for="barangay" class="form-label">Barangay</label>
-                    <input type="text" id="barangay" class="swal2-input" required>
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" id="city" class="swal2-input" required>
+                    <input type="text" id="firstName" class="swal2-input" placeholder="First Name" required>
+                    <input type="text" id="lastName" class="swal2-input" placeholder="Last Name" required>
+                    <input type="text" id="phoneNumber" class="swal2-input" placeholder="Phone Number (10 digits)" required>
+                    <input type="text" id="street" class="swal2-input" placeholder="Street" required>
+                    <input type="text" id="barangay" class="swal2-input" placeholder="Barangay" required>
+                    <input type="text" id="city" class="swal2-input" placeholder="City" required>
                 `,
                 showCancelButton: true,
-                confirmButtonText: 'Save Membership',
+                confirmButtonText: 'Submit',
                 cancelButtonText: 'Cancel',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn btn-secondary'
-                },
+                customClass: { confirmButton: 'btn btn-primary', cancelButton: 'btn btn-secondary' },
                 preConfirm: () => {
                     const firstName = document.getElementById('firstName').value.trim();
                     const lastName = document.getElementById('lastName').value.trim();
@@ -813,36 +879,54 @@ try {
                     const barangay = document.getElementById('barangay').value.trim();
                     const city = document.getElementById('city').value.trim();
                     if (!firstName || !lastName || !phoneNumber || !street || !barangay || !city) {
-                        Swal.showValidationMessage('Please fill in all fields');
+                        Swal.showValidationMessage('All fields are required');
                         return false;
                     }
-                    if (!/^\d{10,}$/.test(phoneNumber)) {
-                        Swal.showValidationMessage('Please enter a valid phone number (at least 10 digits)');
+                    if (!/^\d{10}$/.test(phoneNumber)) {
+                        Swal.showValidationMessage('Phone number must be 10 digits');
                         return false;
                     }
-                    return { firstName, lastName, phoneNumber, street, barangay, city };
+                    return { firstName, lastName, phone: phoneNumber, street, barangay, city };
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const { firstName, lastName, phoneNumber, street, barangay, city } = result.value;
-                    fetch('process_membership.php', {
+                    const { firstName, lastName, phone, street, barangay, city } = result.value;
+                    const formData = new FormData();
+                    formData.append('firstName', firstName);
+                    formData.append('lastName', lastName);
+                    formData.append('phone', phone);
+                    formData.append('street', street);
+                    formData.append('barangay', barangay);
+                    formData.append('city', city);
+                    console.log('FormData:', [...formData.entries()]); // Debug
+                    fetch('add_member.php', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ firstName, lastName, phoneNumber, street, barangay, city })
+                        body: formData
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        Swal.fire({
-                            icon: data.success ? 'success' : 'error',
-                            title: data.success ? 'Success' : 'Error',
-                            text: data.success ? 'Customer has been registered as a premium member.' : data.error,
-                            customClass: { confirmButton: 'btn btn-primary' }
-                        });
+                    .then(response => response.text()) // Debug: Capture raw response
+                    .then(text => {
+                        console.log('Raw Response:', text); // Debug
+                        try {
+                            const data = JSON.parse(text);
+                            Swal.fire({
+                                icon: data.success ? 'success' : 'error',
+                                title: data.success ? 'Membership Created' : 'Error',
+                                text: data.success ? `Membership created! Your Customer ID is ${data.customerId}.` : data.error,
+                                customClass: { confirmButton: 'btn btn-primary' }
+                            });
+                        } catch (e) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Invalid Response',
+                                text: `Server returned invalid JSON: ${e.message}`,
+                                customClass: { confirmButton: 'btn btn-secondary' }
+                            });
+                        }
                     })
                     .catch(error => {
                         Swal.fire({
-                            title: 'Error',
                             icon: 'error',
+                            title: 'Connection Error',
                             text: `Failed to connect to server: ${error.message}`,
                             customClass: { confirmButton: 'btn btn-secondary' }
                         });
@@ -873,23 +957,16 @@ try {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: 'Successfully logged out.',
-                        customClass: { confirmButton: 'btn btn-primary' }
-                    }).then(() => {
+                Swal.fire({
+                    icon: data.success ? 'success' : 'error',
+                    title: 'Success',
+                    text: data.success ? 'Successfully logged out.' : data.error,
+                    customClass: { confirmButton: 'btn btn-primary' }
+                }).then(() => {
+                    if (data.success) {
                         window.location = 'index.php';
-                    });
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: data.error || 'Logout failed.',
-                        customClass: { confirmButton: 'btn btn-secondary' }
-                    });
-                }
+                    }
+                });
             })
             .catch(error => {
                 Swal.fire({
@@ -899,13 +976,6 @@ try {
                     customClass: { confirmButton: 'btn btn-secondary' }
                 });
             });
-        }
-        function updateProductStock(productId, quantity) {
-            const stockElement = document.querySelector(`.stock-info[data-product-id="${productId}"]`);
-            if (stockElement) {
-                const currentStock = parseInt(stockElement.textContent.replace('In Stock: ', '')) || 0;
-                stockElement.textContent = `In Stock: ${currentStock - quantity}`;
-            }
         }
     </script>
 </body>

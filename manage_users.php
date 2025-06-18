@@ -182,148 +182,246 @@ if (isset($_POST['delete_user'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Arial, sans-serif;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 250px;
-            background-color: #212529;
-            color: white;
-            z-index: 1000;
-            transition: all 0.3s;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
-        }
-        .sidebar-header {
-            padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-            padding: 12px 20px;
-            margin: 5px 10px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        .sidebar .nav-link:hover {
-            color: white;
-            background-color: rgba(255,255,255,0.1);
-        }
-        .sidebar .nav-link.active {
-            color: white;
-            background-color: rgba(0,123,255,0.2);
-            border-left: 3px solid #0d6efd;
-        }
-        .sidebar-footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 20px;
-        }
-        .main-content {
-            margin-left: 250px;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .table-container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 30px;
-        }
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #343a40;
-            margin-bottom: 30px;
-        }
-        .btn-update {
-            background-color: #007bff;
-            border: none;
-            border-radius: 50px;
-            padding: 5px 15px;
-            font-weight: 500;
-        }
-        .btn-update:hover {
-            background-color: #0056b3;
-        }
-        .btn-delete {
-            background-color: #dc3545;
-            border: none;
-            border-radius: 50px;
-            padding: 5px 15px;
-            font-weight: 500;
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-        .btn-rate {
-            background-color: #28a745;
-            border: none;
-            border-radius: 50px;
-            padding: 5px 15px;
-            font-weight: 500;
-        }
-        .btn-rate:hover {
-            background-color: #218838;
-        }
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-            .sidebar .nav-link span, .sidebar-header h3 {
-                display: none;
-            }
-            .sidebar .nav-link {
-                text-align: center;
-                padding: 12px 5px;
-            }
-            .main-content {
-                margin-left: 70px;
-            }
-            .table-container {
-                overflow-x: auto;
-            }
-        }
+    /* Background image with corrected syntax */
+    background-image: url('button_images/otsootso.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll; /* Image scrolls with content */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Add a semi-transparent overlay to improve text readability */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7); /* Light overlay for contrast */
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin-top: 50px;
+    position: relative; /* Ensure container is above the overlay */
+    z-index: 1;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.dashboard-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    width: 80%; /* Adjust as needed */
+    height: auto; /* Allow height to adjust based on content */
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-img {
+    width: 100%; /* Make image take full width of the card */
+    height: 150px;
+    object-fit: contain; /* Ensure the entire image is visible */
+    display: block; /* Remove any inline spacing issues */
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #343a40;
+    margin-top: 10px;
+}
+
+.row-centered {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #343a40;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 1000;
+    transition: all 0.3s;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    background-color: #e90e00; /* Red background to match original design */
+}
+
+.sidebar-header {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 15px;
+}
+
+.sidebar img {
+        height: 200px; /* Increased logo height for better fit */
+        width: auto; /* Maintain aspect ratio */
+        transition: transform 0.3s ease; /* Smooth hover effect */
+    }
+
+.sidebar .nav-link {
+    color: rgba(255,255,255,0.8);
+    padding: 12px 20px;
+    margin: 5px 10px;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.sidebar .nav-link.active {
+    color: white;
+    background-color: rgba(0,123,255,0.2);
+    border-left: 3px solid #0d6efd;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: 15px;
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: all 0.3s;
+    min-width: calc(100vw - 250px); /* Ensure content doesn't collapse */
+    box-sizing: border-box;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        overflow: hidden;
+    }
+
+    .sidebar .nav-link span,
+    .sidebar-header h3,
+    .sidebar .dropdown-toggle span {
+        display: none;
+    }
+
+    .sidebar .nav-link {
+        text-align: center;
+        padding: 12px 5px;
+    }
+
+    .sidebar .nav-link i {
+        margin-right: 0;
+        font-size: 1.2rem;
+    }
+
+    .main-content {
+        margin-left: 70px;
+        min-width: calc(100vw - 70px); /* Adjust for smaller sidebar */
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) or (max-device-width: 576px) {
+    .sidebar {
+        width: 60px; /* Slightly smaller for very small screens or high zoom */
+    }
+
+    .main-content {
+        margin-left: 60px;
+        min-width: calc(100vw - 60px);
+    }
+
+    .container {
+        margin-top: 20px;
+        padding: 15px;
+    }
+}
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h3 class="text-center">Mura Lahat Store</h3>
+    <!-- Sidebar -->
+    <div class="sidebar text-white"> <!-- Removed bg-dark class -->
+        <div class="sidebar-header p-3">
+            <h3 class="text-center"><img src="button_images/jobart.png" alt="logo" width=></h3>
         </div>
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link" href="admin_dashboard.php"><i class="bi bi-house me-2"></i><span>Dashboard</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="add_product.php"><i class="bi bi-plus-circle me-2"></i><span>Add Product</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="view_products.php"><i class="bi bi-list-ul me-2"></i><span>View Products</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="manage_members.php"><i class="bi bi-people me-2"></i><span>Manage Members</span></a>
-            </li>
+           
             <li class="nav-item">
                 <a class="nav-link active" href="manage_users.php"><i class="bi bi-person-gear me-2"></i><span>Manage Users</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="add_category.php"><i class="bi bi-tag me-2"></i><span>Add Category</span></a>
+                <a class="nav-link active" href="add_position.php"><i class="bi bi-person-gear me-2"></i><span>Add Position</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="add_position.php"><i class="bi bi-briefcase me-2"></i><span>Add Position</span></a>
-            </li>
+           
         </ul>
         <div class="sidebar-footer">
-            <a class="nav-link text-danger" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i><span>Logout</span></a>
+            <a class="nav-link" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i><span>Logout</span></a>
         </div>
     </div>
+
+
+
     <div class="main-content">
         <div class="container">
             <h2 class="section-title">Manage Users</h2>

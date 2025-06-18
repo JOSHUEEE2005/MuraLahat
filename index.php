@@ -56,6 +56,17 @@ if (isset($_POST['login'])) {
             margin: auto;
             padding: 20px;
         }
+        body {
+    /* Background image with corrected syntax */
+    background-image: url('button_images/otsootso.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: scroll; /* Image scrolls with content */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+    margin: 0;
+    min-height: 100vh;
+}
     </style>
 </head>
 <body>

@@ -51,51 +51,71 @@ if (isset($_POST['addPosition'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .navbar {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .container {
-            max-width: 600px;
-            margin-top: 50px;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-label {
-            font-weight: 500;
-            color: #343a40;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 25px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-        .form-control, .form-select {
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-        }
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #343a40;
-            margin-bottom: 20px;
-        }
-        .navbar-brand, .nav-link {
-            color: #fff !important;
-        }
-        .navbar {
-            background: rgb(8, 8, 8);
-        }
+        /* Background image with corrected syntax */
+        background-image: url('button_images/tralalerotropalang.png');
+        background-size: cover;
+        background-position: center;
+        background-attachment: scroll; /* Image scrolls with content */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        position: relative;
+        margin: 0;
+        min-height: 100vh;
+    }
+    /* Add a semi-transparent overlay to improve text readability */
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.7); /* Light overlay for contrast */
+        z-index: -1;
+    }
+    .navbar {
+        background-color: #e90e00; /* Fully transparent navbar */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+    .navbar-brand {
+        padding: 0; /* Remove default padding for image alignment */
+    }
+    .navbar-brand img {
+        height: 60px; /* Increased logo height for better fit */
+        width: auto; /* Maintain aspect ratio */
+        transition: transform 0.3s ease; /* Smooth hover effect */
+    }
+    .navbar-brand img:hover {
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+    .navbar-toggler-icon {
+        filter: invert(1); /* White toggler icon for contrast */
+    }
+    .nav-link {
+        color: #ffd700 !important; /* Gold/yellow for links to match palette */
+        transition: color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link:focus {
+        color: #ff4500 !important; /* Red hover to match palette */
+    }
+    .nav-link.text-danger {
+        color:rgb(255, 204, 0) !important; /* Red for logout button */
+    }
+    .nav-link.text-danger:hover {
+        color: #ffd700 !important; /* Gold/yellow hover for consistency */
+    }
+    .container {
+        max-width: 1200px;
+        margin-top: 50px;
+        position: relative; /* Ensure container is above the overlay */
+        z-index: 1;
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #343a40;
+        text-align: center;
+        margin-bottom: 40px;
+    }
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -106,7 +126,7 @@ if (isset($_POST['addPosition'])) {
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Mura Lahat</a>
+            <a class="navbar-brand" href="#"><img src="button_images/pusongligaw.png" alt="Mura Lahat Store Logo"></a>
             <div class="navbar-nav">
                 <a class="nav-link" href="<?php echo $_SESSION['position'] === 'Admin' ? 'admin_dashboard.php' : 'view_products.php'; ?>">Back to Dashboard</a>
             </div>

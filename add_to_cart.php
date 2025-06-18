@@ -8,7 +8,9 @@ try {
     $data = json_decode(file_get_contents('php://input'), true);
     
     if (!isset($_SESSION['customer_id'])) {
-        throw new Exception('Customer not logged in');
+        // Create a guest customer if none exists
+        $_SESSION['customer_type'] = 'guest';
+        $_SESSION['customer_id'] = 'guest_' . session_id();
     }
     
     if (!isset($data['productId']) || !isset($data['quantity']) || !isset($data['price'])) {
@@ -37,4 +39,3 @@ try {
 
 header('Content-Type: application/json');
 echo json_encode($response);
-?>

@@ -77,3 +77,53 @@ Received: customerId=, cashPaid=4500[15-Jun-2025 15:53:54 Europe/Berlin] Get Pro
 Received: customerId=, cashPaid=700Received: customerId=, cashPaid=2000[15-Jun-2025 16:41:19 Europe/Berlin] Update Product Request: {"productId":"3","prodName":"vape v2 chocolate","stockMode":"set","prodStock":35,"prodPrice":500,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[1],"hasFile":true}
 [15-Jun-2025 16:41:19 Europe/Berlin] Update Product Success: Product ID 3 updated
 [15-Jun-2025 16:41:19 Europe/Berlin] Update Product Result: {"success":true}
+Received: customerId=, cashPaid=3000[15-Jun-2025 16:56:03 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Kwek Kwek","stockMode":"set","prodStock":10,"prodPrice":30,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[3],"hasFile":true}
+[15-Jun-2025 16:56:03 Europe/Berlin] Update Product Success: Product ID 1 updated
+[15-Jun-2025 16:56:03 Europe/Berlin] Update Product Result: {"success":true}
+[15-Jun-2025 19:19:12 Europe/Berlin] Process Membership Error: Phone number already registered in C:\xampp\htdocs\collab\process_membership.php on line 41
+[15-Jun-2025 20:10:44 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Kwek Kwek","stockMode":"set","prodStock":40,"prodPrice":30,"effectiveFrom":"2025-06-14","effectiveTo":null,"categoryIds":[3],"hasFile":false}
+[15-Jun-2025 20:10:44 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 03:16:53 Europe/Berlin] Update Product Request: {"productId":"8","prodName":"Stick 0","stockMode":"set","prodStock":69,"prodPrice":180,"effectiveFrom":"2025-06-15","effectiveTo":"2025-07-03","categoryIds":[3],"hasFile":true}
+[16-Jun-2025 03:16:53 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 06:57:38 Europe/Berlin] Delete Product Request: Product ID = 3
+[16-Jun-2025 06:57:38 Europe/Berlin] Delete Product Success: Product ID 3 deleted
+[16-Jun-2025 06:57:38 Europe/Berlin] Delete Product Result: {"success":true}
+[16-Jun-2025 07:11:49 Europe/Berlin] Update Product Request: {"productId":"9","prodName":"Emergency Light","stockMode":"set","prodStock":10,"prodPrice":450,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[1,2,3],"hasFile":false}
+[16-Jun-2025 07:11:49 Europe/Berlin] Update Product Success: Product ID 9 updated
+[16-Jun-2025 07:11:49 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:11:54 Europe/Berlin] Update Product Request: {"productId":"8","prodName":"Foam","stockMode":"set","prodStock":8,"prodPrice":600,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[2],"hasFile":false}
+[16-Jun-2025 07:11:54 Europe/Berlin] Update Product Success: Product ID 8 updated
+[16-Jun-2025 07:11:54 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:12:01 Europe/Berlin] Update Product Request: {"productId":"2","prodName":"Kids Study Chair","stockMode":"set","prodStock":66,"prodPrice":150,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[1,2],"hasFile":false}
+[16-Jun-2025 07:12:01 Europe/Berlin] Update Product Success: Product ID 2 updated
+[16-Jun-2025 07:12:01 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:12:08 Europe/Berlin] Update Product Request: {"productId":"7","prodName":"Office Chair","stockMode":"set","prodStock":5,"prodPrice":1000,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[1],"hasFile":false}
+[16-Jun-2025 07:12:08 Europe/Berlin] Update Product Success: Product ID 7 updated
+[16-Jun-2025 07:12:08 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:12:13 Europe/Berlin] Update Product Request: {"productId":"6","prodName":"Office Desk","stockMode":"set","prodStock":5,"prodPrice":3200,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[1],"hasFile":false}
+[16-Jun-2025 07:12:13 Europe/Berlin] Update Product Success: Product ID 6 updated
+[16-Jun-2025 07:12:13 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:12:18 Europe/Berlin] Update Product Request: {"productId":"5","prodName":"Puzzle Mat","stockMode":"set","prodStock":60,"prodPrice":150,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[2],"hasFile":false}
+[16-Jun-2025 07:12:18 Europe/Berlin] Update Product Success: Product ID 5 updated
+[16-Jun-2025 07:12:18 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:12:24 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Trapezoidal Table","stockMode":"set","prodStock":10,"prodPrice":600,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[2],"hasFile":false}
+[16-Jun-2025 07:12:24 Europe/Berlin] Update Product Success: Product ID 1 updated
+[16-Jun-2025 07:12:24 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 07:12:34 Europe/Berlin] Update Product Request: {"productId":"4","prodName":"Water Dispenser","stockMode":"set","prodStock":5,"prodPrice":5000,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[3],"hasFile":false}
+[16-Jun-2025 07:12:34 Europe/Berlin] Update Product Success: Product ID 4 updated
+[16-Jun-2025 07:12:34 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 08:01:14 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Trapezoidal Table","stockMode":"set","prodStock":9,"prodPrice":800,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[2],"hasFile":false}
+[16-Jun-2025 08:01:14 Europe/Berlin] Update Product Success: Product ID 1 updated
+[16-Jun-2025 08:01:14 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 08:01:31 Europe/Berlin] Update Product Request: {"productId":"1","prodName":"Trapezoidal Table","stockMode":"set","prodStock":9,"prodPrice":600,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[1],"hasFile":false}
+[16-Jun-2025 08:01:31 Europe/Berlin] Update Product Success: Product ID 1 updated
+[16-Jun-2025 08:01:31 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 08:05:50 Europe/Berlin] Update Product Request: {"productId":"4","prodName":"Water dispens","stockMode":"set","prodStock":5,"prodPrice":4500,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[2,3],"hasFile":false}
+[16-Jun-2025 08:05:50 Europe/Berlin] Update Product Success: Product ID 4 updated
+[16-Jun-2025 08:05:50 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 08:06:04 Europe/Berlin] Update Product Request: {"productId":"4","prodName":"Water dispens","stockMode":"set","prodStock":10,"prodPrice":4500,"effectiveFrom":"2025-06-16","effectiveTo":null,"categoryIds":[2,3],"hasFile":false}
+[16-Jun-2025 08:06:04 Europe/Berlin] Update Product Success: Product ID 4 updated
+[16-Jun-2025 08:06:04 Europe/Berlin] Update Product Result: {"success":true}
+[16-Jun-2025 08:10:29 Europe/Berlin] Update Product Request: {"productId":"4","prodName":"Water dispens","stockMode":"set","prodStock":10,"prodPrice":4500,"effectiveFrom":"2025-06-17","effectiveTo":null,"categoryIds":[2,3],"hasFile":false}
+[16-Jun-2025 08:10:29 Europe/Berlin] Update Product Success: Product ID 4 updated
+[16-Jun-2025 08:10:29 Europe/Berlin] Update Product Result: {"success":true}

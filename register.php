@@ -2,23 +2,23 @@
 require_once('classes/functions.php');
 require_once('classes/database.php');
 $con = new database();
-
+ 
 $data = $con->opencon();
 $sweetAlertConfig = "";
-
+ 
 if (isset($_POST['multisave'])) {
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $position = $_POST['position'];
     $hourly_rate = filter_input(INPUT_POST, 'hourly_rate', FILTER_VALIDATE_FLOAT);
     $profile_picture_path = handleFileUpload($_FILES["profile_picture"]);
-    
+   
     // Check if username is already taken before proceeding
     $db = $con->opencon();
     $query = $db->prepare("SELECT Username FROM user_account WHERE Username = ?");
     $query->execute([$username]);
     $existingUser = $query->fetch();
-    
+   
     if ($existingUser) {
         $_SESSION['error'] = "Username is already taken. Please choose a different username.";
     } elseif ($profile_picture_path === false) {
@@ -27,7 +27,7 @@ if (isset($_POST['multisave'])) {
         $_SESSION['error'] = "Please enter a valid rate (must be a non-negative number).";
     } else {
         $userID = $con->signupUser($username, $password, $position, $hourly_rate, $profile_picture_path);
-        
+       
         if ($userID) {
             $sweetAlertConfig = "
             <script>
@@ -48,7 +48,7 @@ if (isset($_POST['multisave'])) {
     }
 }
 ?>
-
+ 
 <!doctype html>
 <html lang="en">
 <head>
@@ -133,7 +133,7 @@ if (isset($_POST['multisave'])) {
             </div>
         </form>
     </div>
-
+ 
     <!-- Bootstrap JS (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
@@ -141,13 +141,13 @@ if (isset($_POST['multisave'])) {
         const form = document.querySelector("form");
         const submitButton = document.getElementById("submitButton");
         let isUsernameValid = false;
-
+ 
         const inputs = form.querySelectorAll("input, select");
         inputs.forEach(input => {
             input.addEventListener("input", () => validateInput(input));
             input.addEventListener("change", () => validateInput(input));
         });
-
+ 
         form.addEventListener("submit", (event) => {
             let valid = true;
             inputs.forEach(input => {
@@ -161,10 +161,10 @@ if (isset($_POST['multisave'])) {
             }
             form.classList.add("was-validated");
         });
-
+ 
         function validateInput(input) {
             let isValid = false;
-
+ 
             if (input.name === 'password') {
                 const password = input.value;
                 const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
@@ -182,7 +182,7 @@ if (isset($_POST['multisave'])) {
             } else {
                 isValid = input.checkValidity();
             }
-
+ 
             if (isValid) {
                 input.classList.remove("is-invalid");
                 input.classList.add("is-valid");
@@ -192,11 +192,11 @@ if (isset($_POST['multisave'])) {
                 input.classList.add("is-invalid");
                 input.setCustomValidity('Invalid input');
             }
-
+ 
             updateSubmitButton();
             return isValid;
         }
-
+ 
         function updateSubmitButton() {
             const allValid = Array.from(inputs).every(input => input.checkValidity());
             submitButton.disabled = !allValid || !isUsernameValid;
@@ -209,7 +209,7 @@ if (isset($_POST['multisave'])) {
                 }))
             });
         }
-
+ 
         $('#username').on('input', function() {
             const username = $(this).val();
             if (username.length > 0) {
@@ -247,11 +247,11 @@ if (isset($_POST['multisave'])) {
                 updateSubmitButton();
             }
         });
-
+ 
         updateSubmitButton();
     });
     </script>
-
+ 
     <?php if (isset($_SESSION['error'])): ?>
     <script>
     Swal.fire({
